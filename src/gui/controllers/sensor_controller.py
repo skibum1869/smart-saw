@@ -98,19 +98,19 @@ class CuttingGraphWidget(QWidget):
     def update_axis_titles(self, x_axis: str, y_axis: str):
         """Update axis title labels based on selected axis types"""
         try:
-            # Y-axis title mapping (Turkish with proper characters)
+            # Y-axis title mapping
             y_titles = {
-                "serit_kesme_hizi": "Kesme Hızı (m/min)",
-                "serit_inme_hizi": "İlerleme Hızı (mm/s)",
-                "serit_motor_akim_a": "Şerit Akım (A)",
-                "serit_sapmasi": "Şerit Sapması (mm)",
-                "serit_motor_tork_percentage": "Şerit Tork (%)",
-                "serit_gerginligi_bar": "Şerit Gerginliği (bar)",
+                "serit_kesme_hizi": "Cutting Speed (m/min)",
+                "serit_inme_hizi": "Descent Speed (mm/s)",
+                "serit_motor_akim_a": "Band Current (A)",
+                "serit_sapmasi": "Band Deviation (mm)",
+                "serit_motor_tork_percentage": "Band Torque (%)",
+                "serit_gerginligi_bar": "Band Tension (bar)",
             }
-            # X-axis title mapping (Turkish with proper characters)
+            # X-axis title mapping
             x_titles = {
-                "timestamp": "Zaman (s)",
-                "kafa_yuksekligi_mm": "Yükseklik (mm)",
+                "timestamp": "Time (s)",
+                "kafa_yuksekligi_mm": "Height (mm)",
             }
             # Update Y-axis title
             if hasattr(self, 'y_axis_title') and self.y_axis_title:
@@ -320,7 +320,7 @@ class CuttingGraphWidget(QWidget):
         # Y-axis title label (rotated text on left side)
         self.y_axis_title = QLabel(self.parent())
         self.y_axis_title.setStyleSheet(axis_title_style)
-        self.y_axis_title.setText("Kesme Hızı (m/min)")  # Default
+        self.y_axis_title.setText("Cutting Speed (m/min)")  # Default
         self.y_axis_title.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
 
         # Left side labels (Y axis) - in kesimGrafigiFrame
@@ -586,7 +586,7 @@ class SensorController(QWidget):
 
         # Initial UI
         self._set_all_frames_green()
-        self._set_all_info_labels("Her şey yolunda.")
+        self._set_all_info_labels("All OK.")
 
         # Trigger graph on initial load
         if self.cutting_graph:
@@ -626,7 +626,7 @@ class SensorController(QWidget):
         """)
 
         # Graph title
-        labelKesimGrafigi = QLabel("Kesim Grafiği", self.kesimGrafigiFrame)
+        labelKesimGrafigi = QLabel("Cutting Graph", self.kesimGrafigiFrame)
         labelKesimGrafigi.setGeometry(37, 20, 220, 36)
         labelKesimGrafigi.setStyleSheet("""
             QLabel {
@@ -683,7 +683,7 @@ class SensorController(QWidget):
         self.XEkseniFrame.setGeometry(33, 724, 578, 342)
         self.XEkseniFrame.setStyleSheet(frame_style)
 
-        labelXEkseni = QLabel("Y Ekseni", self.XEkseniFrame)
+        labelXEkseni = QLabel("Y Axis", self.XEkseniFrame)
         labelXEkseni.setGeometry(34, 19, 295, 39)
         labelXEkseni.setStyleSheet("""
             QLabel {
@@ -696,32 +696,32 @@ class SensorController(QWidget):
         """)
 
         # Y-axis buttons (in XEkseniFrame)
-        self.btnKesmeHizi = QPushButton("Kesme Hızı", self.XEkseniFrame)
+        self.btnKesmeHizi = QPushButton("Cutting Speed", self.XEkseniFrame)
         self.btnKesmeHizi.setGeometry(41, 82, 240, 69)
         self.btnKesmeHizi.setStyleSheet(axis_btn_style)
         self.btnKesmeHizi.setCheckable(True)
 
-        self.btnIlerlemeHizi = QPushButton("İlerleme Hızı", self.XEkseniFrame)
+        self.btnIlerlemeHizi = QPushButton("Descent Speed", self.XEkseniFrame)
         self.btnIlerlemeHizi.setGeometry(298, 82, 240, 69)
         self.btnIlerlemeHizi.setStyleSheet(axis_btn_style)
         self.btnIlerlemeHizi.setCheckable(True)
 
-        self.btnSeritAkim = QPushButton("Şerit Akım", self.XEkseniFrame)
+        self.btnSeritAkim = QPushButton("Band Current", self.XEkseniFrame)
         self.btnSeritAkim.setGeometry(41, 162, 240, 69)
         self.btnSeritAkim.setStyleSheet(axis_btn_style)
         self.btnSeritAkim.setCheckable(True)
 
-        self.btnSeritSapmasi = QPushButton("Şerit Sapması", self.XEkseniFrame)
+        self.btnSeritSapmasi = QPushButton("Band Deviation", self.XEkseniFrame)
         self.btnSeritSapmasi.setGeometry(298, 162, 240, 69)
         self.btnSeritSapmasi.setStyleSheet(axis_btn_style)
         self.btnSeritSapmasi.setCheckable(True)
 
-        self.btnSeritTork = QPushButton("Şerit Tork", self.XEkseniFrame)
+        self.btnSeritTork = QPushButton("Band Torque", self.XEkseniFrame)
         self.btnSeritTork.setGeometry(41, 238, 240, 69)
         self.btnSeritTork.setStyleSheet(axis_btn_style)
         self.btnSeritTork.setCheckable(True)
 
-        self.btnSeritGerginligi = QPushButton("Şerit Gerginliği", self.XEkseniFrame)
+        self.btnSeritGerginligi = QPushButton("Band Tension", self.XEkseniFrame)
         self.btnSeritGerginligi.setGeometry(298, 238, 240, 69)
         self.btnSeritGerginligi.setStyleSheet(axis_btn_style)
         self.btnSeritGerginligi.setCheckable(True)
@@ -732,7 +732,7 @@ class SensorController(QWidget):
         self.YEkseniFrame.setGeometry(638, 724, 329, 342)
         self.YEkseniFrame.setStyleSheet(frame_style)
 
-        labelYEkseni = QLabel("X Ekseni", self.YEkseniFrame)
+        labelYEkseni = QLabel("X Axis", self.YEkseniFrame)
         labelYEkseni.setGeometry(34, 19, 295, 39)
         labelYEkseni.setStyleSheet("""
             QLabel {
@@ -745,13 +745,13 @@ class SensorController(QWidget):
         """)
 
         # X-axis buttons (in YEkseniFrame)
-        self.btnZaman = QPushButton("Zaman", self.YEkseniFrame)
+        self.btnZaman = QPushButton("Time", self.YEkseniFrame)
         self.btnZaman.setGeometry(44, 82, 240, 69)
         self.btnZaman.setStyleSheet(axis_btn_style)
         self.btnZaman.setCheckable(True)
         self.btnZaman.setChecked(True)  # Default X axis
 
-        self.btnYukseklik = QPushButton("Yükseklik", self.YEkseniFrame)
+        self.btnYukseklik = QPushButton("Height", self.YEkseniFrame)
         self.btnYukseklik.setGeometry(44, 170, 240, 69)
         self.btnYukseklik.setStyleSheet(axis_btn_style)
         self.btnYukseklik.setCheckable(True)
@@ -762,7 +762,7 @@ class SensorController(QWidget):
         self.AnomaliDurumuFrame.setGeometry(993, 127, 505, 941)
         self.AnomaliDurumuFrame.setStyleSheet(frame_style)
 
-        labelAnomaliDurumu = QLabel("Anomali Durumu", self.AnomaliDurumuFrame)
+        labelAnomaliDurumu = QLabel("Anomaly Status", self.AnomaliDurumuFrame)
         labelAnomaliDurumu.setGeometry(34, 19, 295, 39)
         labelAnomaliDurumu.setStyleSheet("""
             QLabel {
@@ -821,11 +821,11 @@ class SensorController(QWidget):
         self.KesmeHiziFrame.setGeometry(8, 30, 443, 60)
         self.KesmeHiziFrame.setStyleSheet(green_frame_style)
 
-        self.labelKesmeHiziName = QLabel("Kesme Hızı", self.KesmeHiziFrame)
+        self.labelKesmeHiziName = QLabel("Cutting Speed", self.KesmeHiziFrame)
         self.labelKesmeHiziName.setGeometry(28, 8, 393, 20)
         self.labelKesmeHiziName.setStyleSheet(sensor_name_style)
 
-        self.labelKesmeHiziInfo = QLabel("Her şey yolunda.", self.KesmeHiziFrame)
+        self.labelKesmeHiziInfo = QLabel("All OK.", self.KesmeHiziFrame)
         self.labelKesmeHiziInfo.setGeometry(25, 33, 401, 20)
         self.labelKesmeHiziInfo.setStyleSheet(info_style)
 
@@ -834,11 +834,11 @@ class SensorController(QWidget):
         self.IlerlemeHiziFrame.setGeometry(8, 110, 443, 60)
         self.IlerlemeHiziFrame.setStyleSheet(green_frame_style)
 
-        self.labelIlerlemeHiziName = QLabel("İlerleme Hızı", self.IlerlemeHiziFrame)
+        self.labelIlerlemeHiziName = QLabel("Descent Speed", self.IlerlemeHiziFrame)
         self.labelIlerlemeHiziName.setGeometry(25, 8, 393, 20)
         self.labelIlerlemeHiziName.setStyleSheet(sensor_name_style)
 
-        self.labelIlerlemeHiziInfo = QLabel("Her şey yolunda.", self.IlerlemeHiziFrame)
+        self.labelIlerlemeHiziInfo = QLabel("All OK.", self.IlerlemeHiziFrame)
         self.labelIlerlemeHiziInfo.setGeometry(25, 33, 401, 20)
         self.labelIlerlemeHiziInfo.setStyleSheet(info_style)
 
@@ -847,11 +847,11 @@ class SensorController(QWidget):
         self.SeritAkimFrame.setGeometry(8, 190, 443, 60)
         self.SeritAkimFrame.setStyleSheet(green_frame_style)
 
-        self.labelSeritAkimName = QLabel("Şerit Akım", self.SeritAkimFrame)
+        self.labelSeritAkimName = QLabel("Band Current", self.SeritAkimFrame)
         self.labelSeritAkimName.setGeometry(25, 8, 393, 20)
         self.labelSeritAkimName.setStyleSheet(sensor_name_style)
 
-        self.labelSeritAkimInfo = QLabel("Her şey yolunda.", self.SeritAkimFrame)
+        self.labelSeritAkimInfo = QLabel("All OK.", self.SeritAkimFrame)
         self.labelSeritAkimInfo.setGeometry(25, 33, 401, 20)
         self.labelSeritAkimInfo.setStyleSheet(info_style)
 
@@ -860,11 +860,11 @@ class SensorController(QWidget):
         self.SeritTorkFrame.setGeometry(8, 270, 443, 60)
         self.SeritTorkFrame.setStyleSheet(green_frame_style)
 
-        self.labelSeritTorkName = QLabel("Şerit Tork", self.SeritTorkFrame)
+        self.labelSeritTorkName = QLabel("Band Torque", self.SeritTorkFrame)
         self.labelSeritTorkName.setGeometry(25, 8, 393, 20)
         self.labelSeritTorkName.setStyleSheet(sensor_name_style)
 
-        self.labelSeritTorkInfo = QLabel("Her şey yolunda.", self.SeritTorkFrame)
+        self.labelSeritTorkInfo = QLabel("All OK.", self.SeritTorkFrame)
         self.labelSeritTorkInfo.setGeometry(25, 33, 401, 20)
         self.labelSeritTorkInfo.setStyleSheet(info_style)
 
@@ -873,11 +873,11 @@ class SensorController(QWidget):
         self.SeritGerginligiFrame.setGeometry(8, 350, 443, 60)
         self.SeritGerginligiFrame.setStyleSheet(green_frame_style)
 
-        self.labelSeritGerginligiName = QLabel("Şerit Gerginliği", self.SeritGerginligiFrame)
+        self.labelSeritGerginligiName = QLabel("Band Tension", self.SeritGerginligiFrame)
         self.labelSeritGerginligiName.setGeometry(25, 8, 393, 20)
         self.labelSeritGerginligiName.setStyleSheet(sensor_name_style)
 
-        self.labelSeritGerginligiInfo = QLabel("Her şey yolunda.", self.SeritGerginligiFrame)
+        self.labelSeritGerginligiInfo = QLabel("All OK.", self.SeritGerginligiFrame)
         self.labelSeritGerginligiInfo.setGeometry(25, 33, 401, 20)
         self.labelSeritGerginligiInfo.setStyleSheet(info_style)
 
@@ -886,11 +886,11 @@ class SensorController(QWidget):
         self.SeritSapmasiFrame.setGeometry(8, 430, 443, 60)
         self.SeritSapmasiFrame.setStyleSheet(green_frame_style)
 
-        self.labelSeritSapmasiName = QLabel("Şerit Sapması", self.SeritSapmasiFrame)
+        self.labelSeritSapmasiName = QLabel("Band Deviation", self.SeritSapmasiFrame)
         self.labelSeritSapmasiName.setGeometry(25, 8, 393, 20)
         self.labelSeritSapmasiName.setStyleSheet(sensor_name_style)
 
-        self.labelSeritSapmasiInfo = QLabel("Her şey yolunda.", self.SeritSapmasiFrame)
+        self.labelSeritSapmasiInfo = QLabel("All OK.", self.SeritSapmasiFrame)
         self.labelSeritSapmasiInfo.setGeometry(25, 33, 401, 20)
         self.labelSeritSapmasiInfo.setStyleSheet(info_style)
 
@@ -899,11 +899,11 @@ class SensorController(QWidget):
         self.TitresimXFrame.setGeometry(8, 510, 443, 60)
         self.TitresimXFrame.setStyleSheet(green_frame_style)
 
-        self.labelTitresimXName = QLabel("Titreşim X", self.TitresimXFrame)
+        self.labelTitresimXName = QLabel("Vibration X", self.TitresimXFrame)
         self.labelTitresimXName.setGeometry(25, 8, 393, 20)
         self.labelTitresimXName.setStyleSheet(sensor_name_style)
 
-        self.labelTitresimXInfo = QLabel("Her şey yolunda.", self.TitresimXFrame)
+        self.labelTitresimXInfo = QLabel("All OK.", self.TitresimXFrame)
         self.labelTitresimXInfo.setGeometry(25, 33, 401, 20)
         self.labelTitresimXInfo.setStyleSheet(info_style)
 
@@ -912,11 +912,11 @@ class SensorController(QWidget):
         self.TitresimYFrame.setGeometry(8, 590, 443, 60)
         self.TitresimYFrame.setStyleSheet(green_frame_style)
 
-        self.labelTitresimYName = QLabel("Titreşim Y", self.TitresimYFrame)
+        self.labelTitresimYName = QLabel("Vibration Y", self.TitresimYFrame)
         self.labelTitresimYName.setGeometry(25, 8, 393, 20)
         self.labelTitresimYName.setStyleSheet(sensor_name_style)
 
-        self.labelTitresimYInfo = QLabel("Her şey yolunda.", self.TitresimYFrame)
+        self.labelTitresimYInfo = QLabel("All OK.", self.TitresimYFrame)
         self.labelTitresimYInfo.setGeometry(25, 33, 401, 20)
         self.labelTitresimYInfo.setStyleSheet(info_style)
 
@@ -925,16 +925,16 @@ class SensorController(QWidget):
         self.TitresimZFrame.setGeometry(8, 670, 443, 60)
         self.TitresimZFrame.setStyleSheet(green_frame_style)
 
-        self.labelTitresimZName = QLabel("Titreşim Z", self.TitresimZFrame)
+        self.labelTitresimZName = QLabel("Vibration Z", self.TitresimZFrame)
         self.labelTitresimZName.setGeometry(25, 8, 393, 20)
         self.labelTitresimZName.setStyleSheet(sensor_name_style)
 
-        self.labelTitresimZInfo = QLabel("Her şey yolunda.", self.TitresimZFrame)
+        self.labelTitresimZInfo = QLabel("All OK.", self.TitresimZFrame)
         self.labelTitresimZInfo.setGeometry(25, 33, 401, 20)
         self.labelTitresimZInfo.setStyleSheet(info_style)
 
         # ===== RESET BUTTON (inside MotorVerileriFrame) =====
-        self.toolButton = QPushButton("Sıfırla", self.MotorVerileriFrame)
+        self.toolButton = QPushButton("Reset", self.MotorVerileriFrame)
         self.toolButton.setGeometry(8, 750, 443, 60)
         self.toolButton.setStyleSheet("""
             QPushButton {
@@ -1135,7 +1135,7 @@ class SensorController(QWidget):
                 self.anomaly_states[key] = False
 
         self._set_all_frames_green()
-        self._set_all_info_labels("Her şey yolunda.")
+        self._set_all_info_labels("All OK.")
 
         # Reset anomaly tracker (persists reset time to DB)
         if self.data_pipeline and hasattr(self.data_pipeline, 'anomaly_tracker'):
@@ -1234,7 +1234,7 @@ class SensorController(QWidget):
             if self.data_pipeline and hasattr(self.data_pipeline, 'anomaly_tracker'):
                 anomaly_summary = self.data_pipeline.anomaly_tracker.get_anomaly_summary()
 
-            def upd(frame_name: str, label_name: str, sensor_key: str, ok_text: str = "Her şey yolunda."):
+            def upd(frame_name: str, label_name: str, sensor_key: str, ok_text: str = "All OK."):
                 frame = getattr(self, frame_name, None)
                 label = getattr(self, label_name, None)
                 is_anom = sensor_key in anomaly_summary

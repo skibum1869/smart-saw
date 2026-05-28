@@ -8,10 +8,17 @@ class PageIndex(IntEnum):
 
     Values must match the addWidget() insertion order in MainController._setup_ui().
     """
+    CONTROL_PANEL = 0
+    AUTO_CUTTING  = 1
+    POSITIONING   = 2
+    SENSOR        = 3
+    MONITORING    = 4
+    ALARM         = 5
+    CAMERA        = 6
+
+    # Backward-compatible aliases
     KONTROL_PANELI = 0
     OTOMATIK_KESIM = 1
     KONUMLANDIRMA  = 2
-    SENSOR         = 3
     IZLEME         = 4
-    ALARM          = 5
     KAMERA         = 6

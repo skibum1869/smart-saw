@@ -24,7 +24,7 @@ except ImportError:
 from .alarm_controller import AlarmController
 from .control_panel_controller import ControlPanelController
 from .monitoring_controller import MonitoringController
-from .otomatik_kesim_controller import OtomatikKesimController
+from .otomatik_kesim_controller import OtomatikKesimController as AutoCuttingController
 from .positioning_controller import PositioningController
 from .sensor_controller import SensorController
 from ..page_index import PageIndex
@@ -170,32 +170,32 @@ class MainController(QMainWindow):
         """
 
         # Navigation buttons
-        self.btnControlPanel = QPushButton("  Kontrol Paneli", self.sidebarFrame)
+        self.btnControlPanel = QPushButton("  Control Panel", self.sidebarFrame)
         self.btnControlPanel.setGeometry(26, 165, 355, 110)
         self.btnControlPanel.setIcon(self._icon("control-panel-icon2.svg"))
         self.btnControlPanel.setIconSize(QSize(70, 70))
         self.btnControlPanel.setStyleSheet(nav_btn_style)
         self.btnControlPanel.setCheckable(True)
         self.btnControlPanel.setChecked(True)
-        self.btnControlPanel.clicked.connect(lambda: self._switch_page(PageIndex.KONTROL_PANELI))
+        self.btnControlPanel.clicked.connect(lambda: self._switch_page(PageIndex.CONTROL_PANEL))
 
-        self.btnOtomatikKesim = QPushButton("  Otomatik Kesim", self.sidebarFrame)
+        self.btnOtomatikKesim = QPushButton("  Auto Cutting", self.sidebarFrame)
         self.btnOtomatikKesim.setGeometry(26, 286, 355, 110)
         self.btnOtomatikKesim.setIcon(self._icon("cutting-start-icon.svg"))
         self.btnOtomatikKesim.setIconSize(QSize(80, 80))
         self.btnOtomatikKesim.setStyleSheet(nav_btn_style)
         self.btnOtomatikKesim.setCheckable(True)
-        self.btnOtomatikKesim.clicked.connect(lambda: self._switch_page(PageIndex.OTOMATIK_KESIM))
+        self.btnOtomatikKesim.clicked.connect(lambda: self._switch_page(PageIndex.AUTO_CUTTING))
 
-        self.btnPositioning = QPushButton("  Konumlandırma", self.sidebarFrame)
+        self.btnPositioning = QPushButton("  Positioning", self.sidebarFrame)
         self.btnPositioning.setGeometry(26, 407, 355, 110)
         self.btnPositioning.setIcon(self._icon("positioning-icon2.svg"))
         self.btnPositioning.setIconSize(QSize(80, 80))
         self.btnPositioning.setStyleSheet(nav_btn_style)
         self.btnPositioning.setCheckable(True)
-        self.btnPositioning.clicked.connect(lambda: self._switch_page(PageIndex.KONUMLANDIRMA))
+        self.btnPositioning.clicked.connect(lambda: self._switch_page(PageIndex.POSITIONING))
 
-        self.btnSensor = QPushButton("  Sensör Verileri", self.sidebarFrame)
+        self.btnSensor = QPushButton("  Sensor Data", self.sidebarFrame)
         self.btnSensor.setGeometry(26, 528, 355, 110)
         self.btnSensor.setIcon(self._icon("sensor-icon2.svg"))
         self.btnSensor.setIconSize(QSize(80, 80))
@@ -203,15 +203,15 @@ class MainController(QMainWindow):
         self.btnSensor.setCheckable(True)
         self.btnSensor.clicked.connect(lambda: self._switch_page(PageIndex.SENSOR))
 
-        self.btnTracking = QPushButton("  İzleme", self.sidebarFrame)
+        self.btnTracking = QPushButton("  Monitoring", self.sidebarFrame)
         self.btnTracking.setGeometry(26, 649, 355, 110)
         self.btnTracking.setIcon(self._icon("tracking-icon2.svg"))
         self.btnTracking.setIconSize(QSize(80, 80))
         self.btnTracking.setStyleSheet(nav_btn_style)
         self.btnTracking.setCheckable(True)
-        self.btnTracking.clicked.connect(lambda: self._switch_page(PageIndex.IZLEME))
+        self.btnTracking.clicked.connect(lambda: self._switch_page(PageIndex.MONITORING))
 
-        self.btnAlarm = QPushButton("  Alarmlar", self.sidebarFrame)
+        self.btnAlarm = QPushButton("  Alarms", self.sidebarFrame)
         self.btnAlarm.setGeometry(26, 770, 355, 110)
         self.btnAlarm.setIcon(self._icon("sensor-icon2.svg"))
         self.btnAlarm.setIconSize(QSize(80, 80))
@@ -221,23 +221,23 @@ class MainController(QMainWindow):
 
         # Store navigation buttons
         self.nav_buttons = [
-            self.btnControlPanel,    # PageIndex.KONTROL_PANELI (0)
-            self.btnOtomatikKesim,   # PageIndex.OTOMATIK_KESIM (1)
-            self.btnPositioning,     # PageIndex.KONUMLANDIRMA (2)
+            self.btnControlPanel,    # PageIndex.CONTROL_PANEL (0)
+            self.btnOtomatikKesim,   # PageIndex.AUTO_CUTTING (1)
+            self.btnPositioning,     # PageIndex.POSITIONING (2)
             self.btnSensor,          # PageIndex.SENSOR (3)
-            self.btnTracking,        # PageIndex.IZLEME (4)
+            self.btnTracking,        # PageIndex.MONITORING (4)
             self.btnAlarm            # PageIndex.ALARM (5)
         ]
 
         # Conditional camera button
         if self.camera_results_store is not None:
-            self.btnCamera = QPushButton("  Kamera", self.sidebarFrame)
+            self.btnCamera = QPushButton("  Camera", self.sidebarFrame)
             self.btnCamera.setGeometry(26, 891, 355, 110)
             self.btnCamera.setIcon(self._icon("camera-icon2.svg"))
             self.btnCamera.setIconSize(QSize(80, 80))
             self.btnCamera.setStyleSheet(nav_btn_style)
             self.btnCamera.setCheckable(True)
-            self.btnCamera.clicked.connect(lambda: self._switch_page(PageIndex.KAMERA))
+            self.btnCamera.clicked.connect(lambda: self._switch_page(PageIndex.CAMERA))
             self.nav_buttons.append(self.btnCamera)
 
         # ===== CONTENT AREA (Stacked Pages) =====
@@ -296,7 +296,7 @@ class MainController(QMainWindow):
         self.iconStatus.setScaledContents(True)
 
         # System status text (moved from ControlPanelController.systemStatusFrame)
-        self.labelSystemStatusInfo = QLabel("Bağlantı Kontrol Ediliyor...", self.notificationFrame)
+        self.labelSystemStatusInfo = QLabel("Checking Connection...", self.notificationFrame)
         self.labelSystemStatusInfo.setGeometry(615, 13, 700, 34)
         self.labelSystemStatusInfo.setStyleSheet("""
             QLabel {
@@ -320,7 +320,7 @@ class MainController(QMainWindow):
             icon_status=self.iconStatus,
             label_system_status_info=self.labelSystemStatusInfo
         )
-        self.otomatik_kesim_page = OtomatikKesimController(
+        self.auto_cutting_page = AutoCuttingController(
             self.control_manager,
             self.data_pipeline,
             parent=self.stackedWidget,
@@ -348,12 +348,12 @@ class MainController(QMainWindow):
         )
 
         # Add pages to stack
-        self.stackedWidget.addWidget(self.control_panel_page)     # Index 0 — PageIndex.KONTROL_PANELI
-        self.stackedWidget.addWidget(self.otomatik_kesim_page)    # Index 1 — PageIndex.OTOMATIK_KESIM
-        self.stackedWidget.addWidget(self.positioning_page)       # Index 2 — PageIndex.KONUMLANDIRMA
-        self.stackedWidget.addWidget(self.sensor_page)            # Index 3 — PageIndex.SENSOR
-        self.stackedWidget.addWidget(self.monitoring_page)        # Index 4 — PageIndex.IZLEME
-        self.stackedWidget.addWidget(self.alarm_page)             # Index 5 — PageIndex.ALARM
+        self.stackedWidget.addWidget(self.control_panel_page)     # Index 0 — PageIndex.CONTROL_PANEL
+        self.stackedWidget.addWidget(self.auto_cutting_page)     # Index 1 — PageIndex.AUTO_CUTTING
+        self.stackedWidget.addWidget(self.positioning_page)      # Index 2 — PageIndex.POSITIONING
+        self.stackedWidget.addWidget(self.sensor_page)           # Index 3 — PageIndex.SENSOR
+        self.stackedWidget.addWidget(self.monitoring_page)       # Index 4 — PageIndex.MONITORING
+        self.stackedWidget.addWidget(self.alarm_page)            # Index 5 — PageIndex.ALARM
 
         # Conditional camera page
         if self.camera_results_store is not None:
@@ -362,7 +362,7 @@ class MainController(QMainWindow):
                 self.camera_results_store,
                 parent=self.stackedWidget
             )
-            self.stackedWidget.addWidget(self.camera_page)  # Index 6 — PageIndex.KAMERA
+            self.stackedWidget.addWidget(self.camera_page)  # Index 6 — PageIndex.CAMERA
 
         # Update date/time
         self._update_datetime()
@@ -390,18 +390,17 @@ class MainController(QMainWindow):
         try:
             now = datetime.now()
 
-            # Turkish day names
-            day_names_tr = {
-                0: "Pazartesi",
-                1: "Salı",
-                2: "Çarşamba",
-                3: "Perşembe",
-                4: "Cuma",
-                5: "Cumartesi",
-                6: "Pazar"
+            day_names = {
+                0: "Monday",
+                1: "Tuesday",
+                2: "Wednesday",
+                3: "Thursday",
+                4: "Friday",
+                5: "Saturday",
+                6: "Sunday"
             }
 
-            day_name = day_names_tr.get(now.weekday(), "")
+            day_name = day_names.get(now.weekday(), "")
             date_str = now.strftime(f"%d.%m.%Y {day_name}")
             time_str = now.strftime("%H:%M")
 
@@ -469,7 +468,7 @@ class MainController(QMainWindow):
                 self._datetime_timer.stop()
 
             # Stop timers in child page controllers
-            for page in [self.control_panel_page, self.otomatik_kesim_page,
+            for page in [self.control_panel_page, self.auto_cutting_page,
                          self.positioning_page,
                          self.sensor_page, self.monitoring_page,
                          self.alarm_page]:

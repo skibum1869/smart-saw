@@ -7,7 +7,7 @@ import threading
 from datetime import datetime
 from typing import Optional
 
-from ...domain.enums import TesereDurumu
+from ...domain.enums import SawState
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +50,7 @@ class CuttingTracker:
 
         # Current session state
         self._current_kesim_id: Optional[int] = None
-        self._previous_state = TesereDurumu.BOSTA
+        self._previous_state = SawState.IDLE
         self._data_count = 0
 
         # Session tracking
@@ -107,20 +107,20 @@ class CuttingTracker:
         """
         with self._state_lock:
             try:
-                current_state = TesereDurumu(testere_durumu)
+                current_state = SawState(testere_durumu)
 
                 # Detect cutting start
-                if (current_state == TesereDurumu.KESIYOR and
-                    self._previous_state != TesereDurumu.KESIYOR):
+                if (current_state == SawState.CUTTING and
+                    self._previous_state != SawState.CUTTING):
                     self._start_session(controller_type, kafa_yuksekligi_mm)
 
                 # Detect cutting end
-                elif (self._previous_state == TesereDurumu.KESIYOR and
-                      current_state != TesereDurumu.KESIYOR):
+                elif (self._previous_state == SawState.CUTTING and
+                      current_state != SawState.CUTTING):
                     self._end_session(kafa_yuksekligi_mm)
 
                 # Increment data count if cutting
-                if current_state == TesereDurumu.KESIYOR and self._current_kesim_id is not None:
+                if current_state == SawState.CUTTING and self._current_kesim_id is not None:
                     self._data_count += 1
 
                 # Update state

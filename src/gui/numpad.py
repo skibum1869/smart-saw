@@ -313,4 +313,4 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     dialog = NumpadDialog()
     if dialog.exec() == QDialog.Accepted:
-        print("Girilen değer:", dialog.get_value())
+        print("Entered value:", dialog.get_value())

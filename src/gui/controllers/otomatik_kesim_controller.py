@@ -1,11 +1,11 @@
 """
-OtomatikKesimController - Auto cutting page controller.
+AutoCuttingController - Auto cutting page controller.
 
 Full-page widget for automatic cutting operations:
 - 5 parameter input frames (P, X, L, C, S)
 - Real-time cut counter with progress bar
-- START, RESET, IPTAL control buttons
-- ML mode toggle (Manuel/Yapay Zeka)
+- START, RESET, CANCEL control buttons
+- ML mode toggle (Manual/AI)
 
 Page size: 1528x1080 (content area)
 Framework: PySide6
@@ -100,15 +100,15 @@ class _ProgressBar(QWidget):
         painter.end()
 
 
-class OtomatikKesimController(QWidget):
+class AutoCuttingController(QWidget):
     """
     Auto cutting page controller.
 
     Features:
     - P, X, L, C, S parameter input via NumpadDialog
     - Real-time cut counter via 500ms QTimer polling D2056
-    - START/RESET/IPTAL control buttons
-    - ML mode toggle (Manuel/Yapay Zeka)
+    - START/RESET/CANCEL control buttons
+    - ML mode toggle (Manual/AI)
     - Parameter lockout during active cutting
     """
 
@@ -129,11 +129,11 @@ class OtomatikKesimController(QWidget):
         self._initialize_machine_control()
 
         # Parameter state
-        self._p_value: str = ""    # Hedef adet (1-9999)
-        self._x_value: str = "1"   # Paketteki adet (1-999), default 1
-        self._l_value: str = ""    # Uzunluk mm (1-99999, decimal)
-        self._c_value: str = ""    # Kesim hizi m/dk (0-500)
-        self._s_value: str = ""    # Inme hizi m/dk (0-500)
+        self._p_value: str = ""    # Target quantity (1-9999)
+        self._x_value: str = "1"   # Pieces per package (1-999), default 1
+        self._l_value: str = ""    # Length mm (1-99999, decimal)
+        self._c_value: str = ""    # Cutting speed m/min (0-500)
+        self._s_value: str = ""    # Descent speed mm/min (0-500)
 
         # Control state
         self._params_enabled: bool = True
@@ -143,7 +143,7 @@ class OtomatikKesimController(QWidget):
         # AI mode initial speeds — saved at START, restored at each new cut
         self._initial_cutting_speed: Optional[int] = None
         self._initial_descent_speed: Optional[float] = None
-        self._prev_testere_durumu: Optional[int] = None  # Track saw state for cut transitions
+        self._prev_saw_state: Optional[int] = None  # Track saw state for cut transitions
 
         # RESET hold state
         self._reset_in_progress: bool = False
@@ -268,7 +268,7 @@ class OtomatikKesimController(QWidget):
         # Sync ML button state from current control_manager mode (D-17)
         self._sync_ml_mode()
 
-        logger.info("OtomatikKesimController initialized")
+        logger.info("AutoCuttingController initialized")
 
     # -------------------------------------------------------------------------
     # Initialization
@@ -278,7 +278,7 @@ class OtomatikKesimController(QWidget):
         """Initialize MachineControl singleton (uses its own Modbus connection)."""
         try:
             self.machine_control = MachineControl()
-            logger.info("MachineControl initialized for OtomatikKesimController")
+            logger.info("MachineControl initialized for AutoCuttingController")
         except Exception as e:
             logger.error(f"Failed to initialize MachineControl: {e}")
             self.machine_control = None
@@ -298,7 +298,7 @@ class OtomatikKesimController(QWidget):
         self._create_param_frame(
             parent=self,
             x=30, y=127, w=340, h=160,
-            title="P \u2014 Paketteki Adet",
+            title="P \u2014 Pieces per Package",
             hint="(1 - 9999)",
             attr_prefix="P",
         )
@@ -307,7 +307,7 @@ class OtomatikKesimController(QWidget):
         self._create_param_frame(
             parent=self,
             x=380, y=127, w=340, h=160,
-            title="X \u2014 Paket Sayısı",
+            title="X \u2014 Package Count",
             hint="(1 - 999)",
             attr_prefix="X",
         )
@@ -315,7 +315,7 @@ class OtomatikKesimController(QWidget):
         # P*X total label (30,297,690,40)
         self.labelTotal = QLabel(self)
         self.labelTotal.setGeometry(30, 297, 690, 40)
-        self.labelTotal.setText("Toplam: 0 adet")
+        self.labelTotal.setText("Total: 0 pcs")
         self.labelTotal.setStyleSheet(
             "background: transparent;"
             " color: #F4F6FC;"
@@ -327,8 +327,8 @@ class OtomatikKesimController(QWidget):
         self._create_param_frame(
             parent=self,
             x=30, y=352, w=690, h=140,
-            title="L \u2014 Uzunluk (mm)",
-            hint="(1 - 99999, ondal\u0131kl\u0131)",
+            title="L \u2014 Length (mm)",
+            hint="(1 - 99999, decimal)",
             attr_prefix="L",
         )
 
@@ -336,7 +336,7 @@ class OtomatikKesimController(QWidget):
         self._create_param_frame(
             parent=self,
             x=30, y=507, w=690, h=140,
-            title="C \u2014 Kesim H\u0131z\u0131 (m/dk)",
+            title="C \u2014 Cutting Speed (m/min)",
             hint="(0 - 500)",
             attr_prefix="C",
         )
@@ -345,7 +345,7 @@ class OtomatikKesimController(QWidget):
         self._create_param_frame(
             parent=self,
             x=30, y=662, w=690, h=140,
-            title="S \u2014 \u0130lerleme H\u0131z\u0131 (mm/dk)",
+            title="S \u2014 Descent Speed (mm/min)",
             hint="(0 - 500)",
             attr_prefix="S",
         )
@@ -358,7 +358,7 @@ class OtomatikKesimController(QWidget):
 
         self.labelCounterTitle = QLabel(self.frameCounter)
         self.labelCounterTitle.setGeometry(20, 15, 700, 35)
-        self.labelCounterTitle.setText("Saya\u00e7")
+        self.labelCounterTitle.setText("Counter")
         self.labelCounterTitle.setStyleSheet(
             "background: transparent;"
             " color: #F4F6FC;"
@@ -384,7 +384,7 @@ class OtomatikKesimController(QWidget):
         # Completion overlay label (hidden until complete)
         self.labelComplete = QLabel(self.frameCounter)
         self.labelComplete.setGeometry(20, 210, 700, 40)
-        self.labelComplete.setText("Tamamland\u0131!")
+        self.labelComplete.setText("Complete!")
         self.labelComplete.setAlignment(Qt.AlignCenter)
         self.labelComplete.setStyleSheet(
             "background: transparent;"
@@ -426,7 +426,7 @@ class OtomatikKesimController(QWidget):
         self.btnReset.setCursor(Qt.PointingHandCursor)
 
         # IPTAL button (30,230,680,80)
-        self.btnIptal = QPushButton("\u0130PTAL", self.frameControl)
+        self.btnIptal = QPushButton("CANCEL", self.frameControl)
         self.btnIptal.setGeometry(30, 230, 680, 80)
         self.btnIptal.setStyleSheet(self._button_destructive_style)
         self.btnIptal.setCursor(Qt.PointingHandCursor)
@@ -455,7 +455,7 @@ class OtomatikKesimController(QWidget):
                 );
             }
         """
-        self.btnAutoMode = QPushButton("Otomatik Kesim Modu", self.frameControl)
+        self.btnAutoMode = QPushButton("Auto Cutting Mode", self.frameControl)
         self.btnAutoMode.setGeometry(30, 340, 680, 70)
         self.btnAutoMode.setStyleSheet(auto_mode_style)
         self.btnAutoMode.setCheckable(True)
@@ -471,7 +471,7 @@ class OtomatikKesimController(QWidget):
 
         self.labelModeTitle = QLabel(self.frameModeCard)
         self.labelModeTitle.setGeometry(20, 15, 300, 30)
-        self.labelModeTitle.setText("Kesim Modu")
+        self.labelModeTitle.setText("Cutting Mode")
         self.labelModeTitle.setStyleSheet(
             "background: transparent;"
             " color: #F4F6FC;"
@@ -503,14 +503,14 @@ class OtomatikKesimController(QWidget):
             }
         """
 
-        self.btnManual = QPushButton("Manuel", self.frameModeCard)
+        self.btnManual = QPushButton("Manual", self.frameModeCard)
         self.btnManual.setGeometry(20, 60, 320, 55)
         self.btnManual.setCheckable(True)
         self.btnManual.setChecked(True)
         self.btnManual.setStyleSheet(mode_button_style)
         self.btnManual.setCursor(Qt.PointingHandCursor)
 
-        self.btnAI = QPushButton("Yapay Zeka", self.frameModeCard)
+        self.btnAI = QPushButton("AI", self.frameModeCard)
         self.btnAI.setGeometry(350, 60, 320, 55)
         self.btnAI.setCheckable(True)
         self.btnAI.setChecked(False)
@@ -641,7 +641,7 @@ class OtomatikKesimController(QWidget):
             self._reset_tick_timer.stop()
         if hasattr(self, '_speed_sync_timer') and self._speed_sync_timer:
             self._speed_sync_timer.stop()
-        logger.debug("OtomatikKesimController timers stopped")
+        logger.debug("AutoCuttingController timers stopped")
 
     # -------------------------------------------------------------------------
     # Speed Sync
@@ -658,10 +658,10 @@ class OtomatikKesimController(QWidget):
 
             # Detect cut end (testere_durumu leaves 3) — reset speeds for next cut
             testere_durumu = int(data.get('testere_durumu', 0))
-            if self._cutting_active and self._prev_testere_durumu is not None:
-                if self._prev_testere_durumu == 3 and testere_durumu != 3:
+            if self._cutting_active and self._prev_saw_state is not None:
+                if self._prev_saw_state == 3 and testere_durumu != 3:
                     self._trigger_ml_state_reset()
-            self._prev_testere_durumu = testere_durumu
+            self._prev_saw_state = testere_durumu
 
             # Target speeds (registers 2066 / 2041)
             cutting = data.get('kesme_hizi_hedef', 0)
@@ -782,9 +782,9 @@ class OtomatikKesimController(QWidget):
             p = int(self._p_value) if self._p_value else 0
             x = int(self._x_value) if self._x_value else 0
             total = p * x
-            self.labelTotal.setText(f"Toplam: {total} adet")
+            self.labelTotal.setText(f"Total: {total} pcs")
         except (ValueError, TypeError):
-            self.labelTotal.setText("Toplam: 0 adet")
+            self.labelTotal.setText("Total: 0 pcs")
 
     # -------------------------------------------------------------------------
     # Parameter Frame Click Handlers
@@ -930,11 +930,11 @@ class OtomatikKesimController(QWidget):
     def _validate_params(self) -> Optional[str]:
         """Validate P, L, X mandatory params. Returns Turkish error string or None."""
         if not self._p_value or int(self._p_value) <= 0:
-            return "P (hedef adet) girilmedi"
+            return "P (target quantity) not entered"
         if not self._l_value or float(self._l_value) <= 0:
-            return "L (uzunluk) girilmedi"
+            return "L (length) not entered"
         if not self._x_value or int(self._x_value) <= 0:
-            return "X (paketteki adet) girilmedi"
+            return "X (pieces per package) not entered"
         return None
 
     def _show_validation_error(self, message: str) -> None:
@@ -976,7 +976,7 @@ class OtomatikKesimController(QWidget):
 
         # UI updates per D-10
         self.btnStart.setEnabled(False)
-        self.btnStart.setText("DEVAM EDIYOR...")
+        self.btnStart.setText("IN PROGRESS...")
         self._set_params_enabled(False)
         self._cutting_active = True
 
@@ -1116,7 +1116,7 @@ class OtomatikKesimController(QWidget):
         # D-10: START button state
         if cutting_active:
             self.btnStart.setEnabled(False)
-            self.btnStart.setText("DEVAM EDIYOR...")
+            self.btnStart.setText("IN PROGRESS...")
         else:
             self.btnStart.setEnabled(True)
             self.btnStart.setText("START")
@@ -1201,3 +1201,6 @@ class OtomatikKesimController(QWidget):
         else:
             self.btnManual.setChecked(True)
             self.btnAI.setChecked(False)
+
+
+OtomatikKesimController = AutoCuttingController  # backward-compatible alias

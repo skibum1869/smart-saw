@@ -1,4 +1,4 @@
-"""Unit tests for OtomatikKesimController (Phase 26).
+"""Unit tests for AutoCuttingController (Phase 26).
 
 Tests use __new__ + manual attribute injection to avoid QApplication
 dependency (same pattern as test_machine_control_auto_cutting.py).
@@ -22,14 +22,14 @@ async def _noop_coro(*args, **kwargs):
 
 @pytest.fixture
 def controller():
-    """Create OtomatikKesimController with mocked dependencies.
+    """Create AutoCuttingController with mocked dependencies.
 
     Uses __new__ + manual attribute injection to avoid requiring a running
     QApplication (and the full PySide6 widget hierarchy).
     """
-    from src.gui.controllers.otomatik_kesim_controller import OtomatikKesimController
+    from src.gui.controllers.otomatik_kesim_controller import AutoCuttingController
 
-    ctrl = OtomatikKesimController.__new__(OtomatikKesimController)
+    ctrl = AutoCuttingController.__new__(AutoCuttingController)
 
     # Dependencies — control_manager.set_mode must return a real coroutine so
     # asyncio.run_coroutine_threadsafe does not raise TypeError
@@ -96,27 +96,27 @@ def controller():
 
 
 def test_validate_params_missing_p(controller):
-    """_validate_params returns Turkish error when P is empty."""
+    """_validate_params returns error when P is empty."""
     controller._p_value = ""
     controller._l_value = "100.0"
     controller._x_value = "5"
-    assert controller._validate_params() == "P (hedef adet) girilmedi"
+    assert controller._validate_params() == "P (target quantity) not entered"
 
 
 def test_validate_params_missing_l(controller):
-    """_validate_params returns Turkish error when L is empty."""
+    """_validate_params returns error when L is empty."""
     controller._p_value = "10"
     controller._l_value = ""
     controller._x_value = "5"
-    assert controller._validate_params() == "L (uzunluk) girilmedi"
+    assert controller._validate_params() == "L (length) not entered"
 
 
 def test_validate_params_missing_x(controller):
-    """_validate_params returns Turkish error when X is empty."""
+    """_validate_params returns error when X is empty."""
     controller._p_value = "10"
     controller._l_value = "100.0"
     controller._x_value = ""
-    assert controller._validate_params() == "X (paketteki adet) girilmedi"
+    assert controller._validate_params() == "X (pieces per package) not entered"
 
 
 def test_validate_params_valid(controller):
@@ -209,11 +209,11 @@ def test_manual_mode_toggle(controller):
 def test_ml_reset_on_cut_end(controller):
     """_sync_speeds_from_plc triggers ML reset when testere_durumu leaves 3."""
     controller._cutting_active = True
-    controller._prev_testere_durumu = 3  # was cutting
+    controller._prev_saw_state = 3  # was cutting
     controller._trigger_ml_state_reset = MagicMock()
     controller.data_pipeline = MagicMock()
     controller.data_pipeline.get_latest_data.return_value = {
-        'testere_durumu': 5,  # şerit yukarı çıkıyor — cut ended
+        'testere_durumu': 5,  # saw rising — cut ended
         'kesme_hizi_hedef': 0, 'inme_hizi_hedef': 0,
     }
     controller._sync_speeds_from_plc()
@@ -223,7 +223,7 @@ def test_ml_reset_on_cut_end(controller):
 def test_ml_no_reset_while_still_cutting(controller):
     """No reset when testere_durumu stays at 3 (same cut continues)."""
     controller._cutting_active = True
-    controller._prev_testere_durumu = 3
+    controller._prev_saw_state = 3
     controller._trigger_ml_state_reset = MagicMock()
     controller.data_pipeline = MagicMock()
     controller.data_pipeline.get_latest_data.return_value = {
@@ -237,7 +237,7 @@ def test_ml_no_reset_while_still_cutting(controller):
 def test_ml_no_reset_when_not_cutting_active(controller):
     """No reset when cutting is not active (START not pressed)."""
     controller._cutting_active = False
-    controller._prev_testere_durumu = 3
+    controller._prev_saw_state = 3
     controller._trigger_ml_state_reset = MagicMock()
     controller.data_pipeline = MagicMock()
     controller.data_pipeline.get_latest_data.return_value = {

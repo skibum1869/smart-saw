@@ -79,7 +79,7 @@ except ImportError:
 
         def __init__(self, parent=None):
             super().__init__(parent)
-            self.setWindowTitle("Sayı Girişi")
+            self.setWindowTitle("Number Input")
             self.setModal(True)
             self.setFixedSize(400, 300)
             self.value = ""
@@ -661,12 +661,12 @@ class ControlPanelController(QWidget):
             'serit_kesme_hizi': '0.0',
             'serit_inme_hizi': '0.0',
             'kesilen_parca_adeti': '0',
-            'testere_durumu': 'Bağlantı Yok',
+            'testere_durumu': 'No Connection',
             'alarm_status': '-',
             'alarm_bilgisi': '-',
             'kesim_baslama': '-',
             'kesim_sure': '-',
-            'modbus_status': 'Bağlantı Yok'
+            'modbus_status': 'No Connection'
         }
 
     def _setup_ui(self):
@@ -771,12 +771,12 @@ class ControlPanelController(QWidget):
         self.cuttingModeFrame.setGeometry(33, 127, 440, 344)
         self.cuttingModeFrame.setStyleSheet(frame_style)
 
-        self.labelCuttingMode = QLabel("Kesim Modu", self.cuttingModeFrame)
+        self.labelCuttingMode = QLabel("Cutting Mode", self.cuttingModeFrame)
         self.labelCuttingMode.setGeometry(27, 26, 381, 34)
         self.labelCuttingMode.setStyleSheet(label_title_style)
 
         # Mode buttons (2 buttons: Manual, AI)
-        self.btnManualMode = QPushButton("Manuel", self.cuttingModeFrame)
+        self.btnManualMode = QPushButton("Manual", self.cuttingModeFrame)
         self.btnManualMode.setGeometry(18, 87, 195, 55)
         self.btnManualMode.setStyleSheet(button_mode_style)
         self.btnManualMode.setCheckable(True)
@@ -785,7 +785,7 @@ class ControlPanelController(QWidget):
             lambda: self._handle_cutting_mode_buttons(self.btnManualMode)
         )
 
-        self.btnAiMode = QPushButton("Yapay Zeka", self.cuttingModeFrame)
+        self.btnAiMode = QPushButton("AI", self.cuttingModeFrame)
         self.btnAiMode.setGeometry(226, 87, 195, 55)
         self.btnAiMode.setStyleSheet(
             button_mode_style.replace("padding-left: 52px;", "padding-left: 32px;")
@@ -796,7 +796,7 @@ class ControlPanelController(QWidget):
         )
 
         # Speed preset buttons
-        self.labelSpeed = QLabel("Hız Seçimi", self.cuttingModeFrame)
+        self.labelSpeed = QLabel("Speed Selection", self.cuttingModeFrame)
         self.labelSpeed.setGeometry(27, 170, 371, 34)
         self.labelSpeed.setStyleSheet(label_title_style)
 
@@ -805,7 +805,7 @@ class ControlPanelController(QWidget):
         fast = self.speed_values["fast"]
 
         self.btnSlowSpeed = QPushButton(
-            f"Yavaş\n{slow['cutting']:.0f}/{slow['descent']:.0f}",
+            f"Slow\n{slow['cutting']:.0f}/{slow['descent']:.0f}",
             self.cuttingModeFrame,
         )
         self.btnSlowSpeed.setGeometry(19, 231, 120, 65)
@@ -827,7 +827,7 @@ class ControlPanelController(QWidget):
         )
 
         self.btnFastSpeed = QPushButton(
-            f"Hızlı\n{fast['cutting']:.0f}/{fast['descent']:.0f}",
+            f"Fast\n{fast['cutting']:.0f}/{fast['descent']:.0f}",
             self.cuttingModeFrame,
         )
         self.btnFastSpeed.setGeometry(300, 231, 120, 65)
@@ -842,7 +842,7 @@ class ControlPanelController(QWidget):
         self.headHeightFrame.setGeometry(488, 127, 251, 344)
         self.headHeightFrame.setStyleSheet(frame_style)
 
-        self.labelHeadHeight = QLabel("Kafa Yüksekliği", self.headHeightFrame)
+        self.labelHeadHeight = QLabel("Head Height", self.headHeightFrame)
         self.labelHeadHeight.setGeometry(25, 26, 211, 34)
         self.labelHeadHeight.setStyleSheet(label_title_style)
 
@@ -884,7 +884,7 @@ class ControlPanelController(QWidget):
         self.bandDeviationFrame.setGeometry(756, 127, 401, 344)
         self.bandDeviationFrame.setStyleSheet(frame_style)
 
-        self.labelBandDeviation = QLabel("Şerit Sapması", self.bandDeviationFrame)
+        self.labelBandDeviation = QLabel("Band Deviation", self.bandDeviationFrame)
         self.labelBandDeviation.setGeometry(27, 26, 271, 34)
         self.labelBandDeviation.setStyleSheet(label_title_style)
 
@@ -955,7 +955,7 @@ class ControlPanelController(QWidget):
         self.bandCuttingSpeedFrame.mousePressEvent = self._handle_cutting_speed_frame_click
 
         self.labelBandCuttingSpeed = QLabel(
-            '<b>Şerit Kesme Hızı</b> <span style="font-weight: 300;">(m/dk)</span>',
+            '<b>Band Cutting Speed</b> <span style="font-weight: 300;">(m/min)</span>',
             self.bandCuttingSpeedFrame
         )
         self.labelBandCuttingSpeed.setGeometry(31, 27, 491, 45)
@@ -970,7 +970,7 @@ class ControlPanelController(QWidget):
         """)
 
         self.labelBandCuttingSpeedInfo = QLabel(
-            "Hız Değeri Girmek İçin Tıklayınız.",
+            "Click to Enter Speed Value",
             self.bandCuttingSpeedFrame
         )
         self.labelBandCuttingSpeedInfo.setGeometry(31, 90, 491, 34)
@@ -1009,7 +1009,7 @@ class ControlPanelController(QWidget):
         self.BandCuttingCurrentFrame.setStyleSheet(nested_frame_style)
 
         self.labelBandCuttingCurrent = QLabel(
-            "Şerit Motor Akımı (A)",
+            "Band Motor Current (A)",
             self.BandCuttingCurrentFrame
         )
         self.labelBandCuttingCurrent.setGeometry(20, 20, 181, 20)
@@ -1042,7 +1042,7 @@ class ControlPanelController(QWidget):
         self.BandCuttingTorqueFrame.setStyleSheet(nested_frame_style)
 
         self.labelBandCuttingTorque = QLabel(
-            "Şerit Motor Torku (%)",
+            "Band Motor Torque (%)",
             self.BandCuttingTorqueFrame
         )
         self.labelBandCuttingTorque.setGeometry(20, 20, 181, 20)
@@ -1077,7 +1077,7 @@ class ControlPanelController(QWidget):
         self.bandDescentSpeedFrame.mousePressEvent = self._handle_descent_speed_frame_click
 
         self.labelBandDescentSpeed = QLabel(
-            '<b>Şerit İlerleme Hızı</b> <span style="font-weight: 300;">(mm/dk)</span>',
+            '<b>Band Descent Speed</b> <span style="font-weight: 300;">(mm/min)</span>',
             self.bandDescentSpeedFrame
         )
         self.labelBandDescentSpeed.setGeometry(31, 27, 491, 45)
@@ -1092,7 +1092,7 @@ class ControlPanelController(QWidget):
         """)
 
         self.labelBandDescentSpeedInfo = QLabel(
-            "Hız Değeri Girmek İçin Tıklayınız.",
+            "Click to Enter Speed Value",
             self.bandDescentSpeedFrame
         )
         self.labelBandDescentSpeedInfo.setGeometry(31, 90, 491, 34)
@@ -1131,7 +1131,7 @@ class ControlPanelController(QWidget):
         self.BandDescentCurrentFrame.setStyleSheet(nested_frame_style)
 
         self.labelBandDescentCurrent = QLabel(
-            "İlerleme Motor Akımı (A)",
+            "Descent Motor Current (A)",
             self.BandDescentCurrentFrame
         )
         self.labelBandDescentCurrent.setGeometry(20, 20, 181, 20)
@@ -1164,7 +1164,7 @@ class ControlPanelController(QWidget):
         self.BandDescentTorqueFrame.setStyleSheet(nested_frame_style)
 
         self.labelBandDescentTorque = QLabel(
-            "İlerleme Motor Torku (%)",
+            "Descent Motor Torque (%)",
             self.BandDescentTorqueFrame
         )
         self.labelBandDescentTorque.setGeometry(20, 20, 181, 20)
@@ -1196,7 +1196,7 @@ class ControlPanelController(QWidget):
         self.logViewerFrame.setGeometry(1176, 362, 321, 703)
         self.logViewerFrame.setStyleSheet(frame_style)
 
-        self.labelLogViewer = QLabel("Çalışma Günlüğü", self.logViewerFrame)
+        self.labelLogViewer = QLabel("Activity Log", self.logViewerFrame)
         self.labelLogViewer.setGeometry(27, 26, 271, 34)
         self.labelLogViewer.setStyleSheet(label_title_style)
 
@@ -1234,7 +1234,7 @@ class ControlPanelController(QWidget):
         self.cuttingControlFrame.setGeometry(33, 845, 1127, 221)
         self.cuttingControlFrame.setStyleSheet(frame_style)
 
-        self.labelCuttingControl = QLabel("Kesim Kontrol", self.cuttingControlFrame)
+        self.labelCuttingControl = QLabel("Cutting Control", self.cuttingControlFrame)
         self.labelCuttingControl.setGeometry(27, 16, 271, 34)
         self.labelCuttingControl.setStyleSheet(label_title_style)
 
@@ -1265,7 +1265,7 @@ class ControlPanelController(QWidget):
 
         # Machine start toggle button (100.1 - arka kapak bypass)
         self.toolBtnMachineStart = QToolButton(self.cuttingControlFrame)
-        self.toolBtnMachineStart.setText("Makine Başlat")
+        self.toolBtnMachineStart.setText("Machine Start")
         self.toolBtnMachineStart.setGeometry(35, 63, 200, 135)
         self.toolBtnMachineStart.setStyleSheet(control_button_style)
         self.toolBtnMachineStart.setCheckable(True)
@@ -1276,7 +1276,7 @@ class ControlPanelController(QWidget):
 
         # Coolant button
         self.toolBtnCoolant = QToolButton(self.cuttingControlFrame)
-        self.toolBtnCoolant.setText("Soğutma Sıvısı")
+        self.toolBtnCoolant.setText("Coolant")
         self.toolBtnCoolant.setGeometry(250, 63, 200, 135)
         self.toolBtnCoolant.setStyleSheet(control_button_style)
         self.toolBtnCoolant.setCheckable(True)
@@ -1287,7 +1287,7 @@ class ControlPanelController(QWidget):
 
         # Sawdust cleaning button
         self.toolBtnSawdustCleaning = QToolButton(self.cuttingControlFrame)
-        self.toolBtnSawdustCleaning.setText("Talaş Temizliği")
+        self.toolBtnSawdustCleaning.setText("Chip Cleaning")
         self.toolBtnSawdustCleaning.setGeometry(465, 63, 200, 135)
         self.toolBtnSawdustCleaning.setStyleSheet(control_button_style)
         self.toolBtnSawdustCleaning.setCheckable(True)
@@ -1298,7 +1298,7 @@ class ControlPanelController(QWidget):
 
         # Cutting start button
         self.toolBtnCuttingStart = QToolButton(self.cuttingControlFrame)
-        self.toolBtnCuttingStart.setText("Kesim Başlat")
+        self.toolBtnCuttingStart.setText("Start Cutting")
         self.toolBtnCuttingStart.setGeometry(680, 63, 200, 135)
         self.toolBtnCuttingStart.setStyleSheet(control_button_style)
         self.toolBtnCuttingStart.setIcon(self._load_icon("cutting-start-icon.svg"))
@@ -1308,7 +1308,7 @@ class ControlPanelController(QWidget):
 
         # Cutting stop button
         self.toolBtnCuttingStop = QToolButton(self.cuttingControlFrame)
-        self.toolBtnCuttingStop.setText("Kesim Durdur")
+        self.toolBtnCuttingStop.setText("Stop Cutting")
         self.toolBtnCuttingStop.setGeometry(895, 63, 200, 135)
         self.toolBtnCuttingStop.setStyleSheet(control_button_style)
         self.toolBtnCuttingStop.setIcon(self._load_icon("cutting-stop-icon.svg"))
@@ -1321,7 +1321,7 @@ class ControlPanelController(QWidget):
         self.cuttingTimeFrame.setGeometry(1176, 127, 321, 221)
         self.cuttingTimeFrame.setStyleSheet(nested_frame_style)
 
-        self.labelCuttingTime = QLabel("Kesim Zamanı", self.cuttingTimeFrame)
+        self.labelCuttingTime = QLabel("Cutting Time", self.cuttingTimeFrame)
         self.labelCuttingTime.setGeometry(27, 16, 200, 22)
         self.labelCuttingTime.setStyleSheet("""
             QLabel {
@@ -1356,7 +1356,7 @@ class ControlPanelController(QWidget):
         row_start = 47
 
         # Start time
-        self.labelStartTime = QLabel("Başlangıç:", self.cuttingTimeFrame)
+        self.labelStartTime = QLabel("Start:", self.cuttingTimeFrame)
         self.labelStartTime.setGeometry(30, row_start, 90, row_height)
         self.labelStartTime.setStyleSheet(time_label_style)
 
@@ -1366,7 +1366,7 @@ class ControlPanelController(QWidget):
         self.labelStartTimeValue.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
 
         # Duration time (live counter)
-        self.labelDurationTime = QLabel("Süre:", self.cuttingTimeFrame)
+        self.labelDurationTime = QLabel("Duration:", self.cuttingTimeFrame)
         self.labelDurationTime.setGeometry(30, row_start + row_height, 90, row_height)
         self.labelDurationTime.setStyleSheet(time_label_style)
 
@@ -1376,7 +1376,7 @@ class ControlPanelController(QWidget):
         self.labelDurationTimeValue.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
 
         # Remaining time (estimated)
-        self.labelRemainingTime = QLabel("Kalan:", self.cuttingTimeFrame)
+        self.labelRemainingTime = QLabel("Remaining:", self.cuttingTimeFrame)
         self.labelRemainingTime.setGeometry(30, row_start + row_height * 2, 90, row_height)
         self.labelRemainingTime.setStyleSheet(time_label_style)
 
@@ -1394,7 +1394,7 @@ class ControlPanelController(QWidget):
         self.labelRemainingTimeValue.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
 
         # Stop time
-        self.labelStopTime = QLabel("Bitiş:", self.cuttingTimeFrame)
+        self.labelStopTime = QLabel("End:", self.cuttingTimeFrame)
         self.labelStopTime.setGeometry(30, row_start + row_height * 3, 90, row_height)
         self.labelStopTime.setStyleSheet(time_label_style)
 
@@ -1404,7 +1404,7 @@ class ControlPanelController(QWidget):
         self.labelStopTimeValue.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
 
         # Previous cutting duration
-        self.labelPrevDuration = QLabel("Önceki:", self.cuttingTimeFrame)
+        self.labelPrevDuration = QLabel("Previous:", self.cuttingTimeFrame)
         self.labelPrevDuration.setGeometry(30, row_start + row_height * 4, 90, row_height)
         self.labelPrevDuration.setStyleSheet(time_label_style)
 
@@ -1422,7 +1422,7 @@ class ControlPanelController(QWidget):
         self.labelPrevDurationValue.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
 
         # Initialize status icon
-        self._update_status_icon('Bağlantı Yok')
+        self._update_status_icon('No Connection')
 
     def _setup_timers(self):
         """Setup all Qt timers for periodic updates."""
@@ -1466,14 +1466,14 @@ class ControlPanelController(QWidget):
             # Set controller based on selection
             if clicked_button == self.btnManualMode:
                 self._switch_controller(ControlMode.MANUAL)
-                self.add_log("Kesim modu manuel olarak ayarlandı", "INFO")
+                self.add_log("Cutting mode set to manual", "INFO")
             elif clicked_button == self.btnAiMode:
                 self._switch_controller(ControlMode.ML)
-                self.add_log("Kesim modu yapay zeka olarak ayarlandı", "INFO")
+                self.add_log("Cutting mode set to AI", "INFO")
 
         except Exception as e:
             logger.error(f"Cutting mode button error: {e}")
-            self.add_log(f"Kesim modu değiştirme hatası: {str(e)}", "ERROR")
+            self.add_log(f"Cutting mode change error: {str(e)}", "ERROR")
 
     def _switch_controller(self, mode: ControlMode):
         """Switch control mode via control manager."""
@@ -1536,7 +1536,7 @@ class ControlPanelController(QWidget):
 
         except Exception as e:
             logger.error(f"Speed button error: {e}")
-            self.add_log(f"Kesim hızı değiştirme hatası: {str(e)}", "ERROR")
+            self.add_log(f"Cutting speed change error: {str(e)}", "ERROR")
 
     def _send_manual_speed(self, speed_level: str):
         """Send manual speed values to machine with proper delay."""
@@ -1544,7 +1544,7 @@ class ControlPanelController(QWidget):
             speeds = self.speed_values.get(speed_level)
             if not speeds:
                 logger.error(f"Invalid speed level: {speed_level}")
-                self.add_log(f"Geçersiz hız seviyesi: {speed_level}", "ERROR")
+                self.add_log(f"Invalid speed level: {speed_level}", "ERROR")
                 return
 
             cutting_speed = speeds["cutting"]
@@ -1563,30 +1563,30 @@ class ControlPanelController(QWidget):
                         # Fallback if no event loop (standalone testing)
                         logger.warning("No event loop - speed command may not work")
                     self.add_log(
-                        f"Kesme hızı {cutting_speed:.1f} m/dk olarak ayarlandı",
+                        f"Cutting speed set to {cutting_speed:.1f} m/min",
                         "INFO"
                     )
                     self.add_log(
-                        f"İnme hızı {descent_speed:.1f} mm/dk olarak ayarlandı",
+                        f"Descent speed set to {descent_speed:.1f} mm/min",
                         "INFO"
                     )
                 except Exception as e:
                     logger.error(f"Error sending speeds via control_manager: {e}")
-                    self.add_log(f"Hız gönderme hatası: {str(e)}", "ERROR")
+                    self.add_log(f"Speed send error: {str(e)}", "ERROR")
             else:
                 # Fallback: just log the values if control_manager is not available
                 self.add_log(
-                    f"Kesme hızı {cutting_speed:.1f} m/dk (bağlantı yok)",
+                    f"Cutting speed {cutting_speed:.1f} m/min (no connection)",
                     "WARNING"
                 )
                 self.add_log(
-                    f"İnme hızı {descent_speed:.1f} mm/dk (bağlantı yok)",
+                    f"Descent speed {descent_speed:.1f} mm/min (no connection)",
                     "WARNING"
                 )
 
         except Exception as e:
             logger.error(f"Speed send error: {e}")
-            self.add_log(f"Hız ayarlama hatası: {str(e)}", "ERROR")
+            self.add_log(f"Speed adjustment error: {str(e)}", "ERROR")
 
     # ========================================================================
     # Frame Click Handlers (for manual speed input)
@@ -1631,11 +1631,11 @@ class ControlPanelController(QWidget):
                     if self.machine_control:
                         success = self.machine_control.write_cutting_speed(int(value))
                         if success:
-                            self.add_log(f"Kesme hızı {value:.0f} olarak Modbus'a gönderildi", "INFO")
+                            self.add_log(f"Cutting speed {value:.0f} sent to Modbus", "INFO")
                         else:
-                            self.add_log(f"Kesme hızı gönderilemedi!", "ERROR")
+                            self.add_log(f"Failed to send cutting speed!", "ERROR")
                     else:
-                        self.add_log("MachineControl bağlantısı yok", "ERROR")
+                        self.add_log("MachineControl connection not available", "ERROR")
 
                     # Update display
                     with self._values_lock:
@@ -1645,13 +1645,13 @@ class ControlPanelController(QWidget):
                     # Log
                     if original_value != value:
                         self.add_log(
-                            f"Kesme hızı {value:.0f} olarak ayarlandı "
-                            f"(girilen değer: {original_value:.0f}, limit: 0-500)",
+                            f"Cutting speed set to {value:.0f} "
+                            f"(entered: {original_value:.0f}, limit: 0-500)",
                             "WARNING"
                         )
         except Exception as e:
             logger.error(f"Cutting speed frame click error: {e}")
-            self.add_log(f"Kesme hızı ayarlama hatası: {str(e)}", "ERROR")
+            self.add_log(f"Cutting speed adjustment error: {str(e)}", "ERROR")
 
     def _handle_descent_speed_frame_click(self, event=None):
         """Handle click on descent speed frame for manual input."""
@@ -1692,11 +1692,11 @@ class ControlPanelController(QWidget):
                     if self.machine_control:
                         success = self.machine_control.write_descent_speed(value)
                         if success:
-                            self.add_log(f"İnme hızı {value:.0f} olarak Modbus'a gönderildi", "INFO")
+                            self.add_log(f"Descent speed {value:.0f} sent to Modbus", "INFO")
                         else:
-                            self.add_log(f"İnme hızı gönderilemedi!", "ERROR")
+                            self.add_log(f"Failed to send descent speed!", "ERROR")
                     else:
-                        self.add_log("MachineControl bağlantısı yok", "ERROR")
+                        self.add_log("MachineControl connection not available", "ERROR")
 
                     # Update display
                     with self._values_lock:
@@ -1706,13 +1706,13 @@ class ControlPanelController(QWidget):
                     # Log
                     if original_value != value:
                         self.add_log(
-                            f"İnme hızı {value:.0f} olarak ayarlandı "
-                            f"(girilen değer: {original_value:.0f}, limit: 0-500)",
+                            f"Descent speed set to {value:.0f} "
+                            f"(entered: {original_value:.0f}, limit: 0-500)",
                             "WARNING"
                         )
         except Exception as e:
             logger.error(f"Descent speed frame click error: {e}")
-            self.add_log(f"İnme hızı ayarlama hatası: {str(e)}", "ERROR")
+            self.add_log(f"Descent speed adjustment error: {str(e)}", "ERROR")
 
     # ========================================================================
     # Control Button Handlers
@@ -1722,7 +1722,7 @@ class ControlPanelController(QWidget):
         """Handle coolant button toggle."""
         try:
             if not self.machine_control:
-                self.add_log("Soğutma kontrol edilemedi: MachineControl yok.", "ERROR")
+                self.add_log("Coolant control failed: MachineControl not available.", "ERROR")
                 self.toolBtnCoolant.blockSignals(True)
                 self.toolBtnCoolant.setChecked(False)
                 self.toolBtnCoolant.blockSignals(False)
@@ -1733,16 +1733,16 @@ class ControlPanelController(QWidget):
                 # Enable coolant
                 success = self.machine_control.start_coolant()
                 if success:
-                    self.add_log("Soğutma sıvısı açıldı.", "INFO")
+                    self.add_log("Coolant turned on.", "INFO")
                 else:
-                    self.add_log("Soğutma sıvısı açılamadı!", "ERROR")
+                    self.add_log("Failed to turn on coolant!", "ERROR")
             else:
                 # Disable coolant
                 success = self.machine_control.stop_coolant()
                 if success:
-                    self.add_log("Soğutma sıvısı kapatıldı.", "INFO")
+                    self.add_log("Coolant turned off.", "INFO")
                 else:
-                    self.add_log("Soğutma sıvısı kapatılamadı!", "ERROR")
+                    self.add_log("Failed to turn off coolant!", "ERROR")
 
             # Revert UI if failed
             if not success:
@@ -1760,7 +1760,7 @@ class ControlPanelController(QWidget):
         """Handle chip cleaning button toggle."""
         try:
             if not self.machine_control:
-                self.add_log("Talaş temizlik kontrol edilemedi: MachineControl yok.", "ERROR")
+                self.add_log("Chip cleaning control failed: MachineControl not available.", "ERROR")
                 self.toolBtnSawdustCleaning.blockSignals(True)
                 self.toolBtnSawdustCleaning.setChecked(False)
                 self.toolBtnSawdustCleaning.blockSignals(False)
@@ -1771,16 +1771,16 @@ class ControlPanelController(QWidget):
                 # Enable chip cleaning
                 success = self.machine_control.start_chip_cleaning()
                 if success:
-                    self.add_log("Talaş temizliği açıldı.", "INFO")
+                    self.add_log("Chip cleaning turned on.", "INFO")
                 else:
-                    self.add_log("Talaş temizliği açılamadı!", "ERROR")
+                    self.add_log("Failed to turn on chip cleaning!", "ERROR")
             else:
                 # Disable chip cleaning
                 success = self.machine_control.stop_chip_cleaning()
                 if success:
-                    self.add_log("Talaş temizliği kapatıldı.", "INFO")
+                    self.add_log("Chip cleaning turned off.", "INFO")
                 else:
-                    self.add_log("Talaş temizliği kapatılamadı!", "ERROR")
+                    self.add_log("Failed to turn off chip cleaning!", "ERROR")
 
             # Revert UI if failed
             if not success:
@@ -1798,7 +1798,7 @@ class ControlPanelController(QWidget):
         """Handle machine start toggle (100.1 - arka kapak bypass)."""
         try:
             if not self.machine_control:
-                self.add_log("Makine başlatılamadı: MachineControl yok.", "ERROR")
+                self.add_log("Machine start failed: MachineControl not available.", "ERROR")
                 self.toolBtnMachineStart.blockSignals(True)
                 self.toolBtnMachineStart.setChecked(False)
                 self.toolBtnMachineStart.blockSignals(False)
@@ -1807,11 +1807,11 @@ class ControlPanelController(QWidget):
             success = self.machine_control.set_machine_start(checked)
             if success:
                 if checked:
-                    self.add_log("Makine başlatıldı (100.1 aktif).", "INFO")
+                    self.add_log("Machine started (100.1 active).", "INFO")
                 else:
                     self.add_log("Makine durduruldu (100.1 pasif).", "INFO")
             else:
-                self.add_log("Makine başlatma/durdurma başarısız!", "ERROR")
+                self.add_log("Machine start/stop failed!", "ERROR")
                 self.toolBtnMachineStart.blockSignals(True)
                 self.toolBtnMachineStart.setChecked(not checked)
                 self.toolBtnMachineStart.blockSignals(False)
@@ -1826,13 +1826,13 @@ class ControlPanelController(QWidget):
         """Handle cutting start button click."""
         try:
             if not self.machine_control:
-                self.add_log("Kesim başlatılamadı: MachineControl yok.", "ERROR")
+                self.add_log("Cutting start failed: MachineControl not available.", "ERROR")
                 return
 
             success = self.machine_control.start_cutting()
 
             if success:
-                self.add_log("Kesim başlatıldı.", "INFO")
+                self.add_log("Cutting started.", "INFO")
                 self._cutting_start_time = datetime.now()
                 self._cutting_start_datetime = datetime.now()
 
@@ -1848,17 +1848,17 @@ class ControlPanelController(QWidget):
                 self.labelDurationTimeValue.setText("00:00:00")
                 self.labelRemainingTimeValue.setText("--:--:--")
             else:
-                self.add_log("Kesim başlatılamadı!", "ERROR")
+                self.add_log("Failed to start cutting!", "ERROR")
 
         except Exception as e:
             logger.error(f"Cutting start error: {e}")
-            self.add_log(f"Kesim başlatma hatası: {str(e)}", "ERROR")
+            self.add_log(f"Cutting start error: {str(e)}", "ERROR")
 
     def _on_cutting_stop_clicked(self):
         """Handle cutting stop button click."""
         try:
             if not self.machine_control:
-                self.add_log("Kesim durdurulamadı: MachineControl yok.", "ERROR")
+                self.add_log("Cutting stop failed: MachineControl not available.", "ERROR")
                 return
 
             success = self.machine_control.stop_cutting()
@@ -1895,11 +1895,11 @@ class ControlPanelController(QWidget):
                     self.current_values['kesim_baslama'] = "-"
                     self.current_values['kesim_sure'] = "-"
             else:
-                self.add_log("Kesim durdurulamadı!", "ERROR")
+                self.add_log("Failed to stop cutting!", "ERROR")
 
         except Exception as e:
             logger.error(f"Cutting stop error: {e}")
-            self.add_log(f"Kesim durdurma hatası: {str(e)}", "ERROR")
+            self.add_log(f"Cutting stop error: {str(e)}", "ERROR")
 
     # ========================================================================
     # Data Update Methods
@@ -1941,7 +1941,7 @@ class ControlPanelController(QWidget):
                         self.toolBtnMachineStart.blockSignals(True)
                         self.toolBtnMachineStart.setChecked(False)
                         self.toolBtnMachineStart.blockSignals(False)
-                        self.add_log("Alarm aktif — makine başlat sıfırlandı.", "WARNING")
+                        self.add_log("Alarm active — machine start reset.", "WARNING")
                     return
 
             is_started = self.machine_control.is_machine_started()
@@ -1950,14 +1950,14 @@ class ControlPanelController(QWidget):
                     self.toolBtnMachineStart.blockSignals(True)
                     self.toolBtnMachineStart.setChecked(False)
                     self.toolBtnMachineStart.blockSignals(False)
-                    self.add_log("Makine durumu okunamadı — buton sıfırlandı.", "WARNING")
+                    self.add_log("Machine state read failed — button reset.", "WARNING")
                 return
             if is_started != self.toolBtnMachineStart.isChecked():
                 self.toolBtnMachineStart.blockSignals(True)
                 self.toolBtnMachineStart.setChecked(is_started)
                 self.toolBtnMachineStart.blockSignals(False)
                 if not is_started:
-                    self.add_log("Makine dışarıdan durduruldu (100.1 sıfırlandı).", "WARNING")
+                    self.add_log("Machine stopped externally (100.1 reset).", "WARNING")
         except Exception as e:
             logger.error(f"Machine start poll error: {e}")
 
@@ -1972,7 +1972,7 @@ class ControlPanelController(QWidget):
                 return
             if status.get('initial_delay_passed', True):
                 if getattr(self, '_last_ml_countdown_logged', None) is not None:
-                    self.add_log("AI modu aktif — kontrol başladı.", "INFO")
+                    self.add_log("AI mode active — control started.", "INFO")
                     self._last_ml_countdown_logged = None
                 return
             # Calculate remaining from manager state
@@ -1990,7 +1990,7 @@ class ControlPanelController(QWidget):
             if countdown != last_logged:
                 self._last_ml_countdown_logged = countdown
                 if countdown > 0:
-                    self.add_log(f"AI aktivasyonuna {countdown}s kaldı", "INFO")
+                    self.add_log(f"AI activation in {countdown}s", "INFO")
         except Exception as e:
             logger.error(f"ML countdown poll error: {e}")
 
@@ -2080,15 +2080,15 @@ class ControlPanelController(QWidget):
                 # Machine status
                 testere_durumu = processed_data.get('testere_durumu', 0)
                 durum_text = {
-                    -1: "BAĞLANTI BEKLENİYOR",  # Special value when Modbus not connected
-                    0: "BOŞTA",
-                    1: "HİDROLİK AKTİF",
-                    2: "ŞERİT MOTOR ÇALIŞIYOR",
-                    3: "KESİM YAPILIYOR",
-                    4: "KESİM BİTTİ",
-                    5: "ŞERİT YUKARI ÇIKIYOR",
-                    6: "MALZEME BESLEME"
-                }.get(testere_durumu, "BİLİNMİYOR")
+                    -1: "AWAITING CONNECTION",  # Special value when Modbus not connected
+                    0: "IDLE",
+                    1: "HYDRAULIC ACTIVE",
+                    2: "BAND MOTOR RUNNING",
+                    3: "CUTTING",
+                    4: "CUTTING COMPLETE",
+                    5: "SAW RISING",
+                    6: "MATERIAL FEEDING"
+                }.get(testere_durumu, "UNKNOWN")
                 self.current_values['testere_durumu'] = durum_text
 
             # Update UI (outside lock)
@@ -2288,13 +2288,13 @@ class ControlPanelController(QWidget):
         try:
             with self._values_lock:
                 if connected:
-                    self.current_values['modbus_status'] = f"Bağlı ({ip})"
-                    self.current_values['testere_durumu'] = "Veri bekleniyor..."
-                    status_text = "Veri bekleniyor..."
+                    self.current_values['modbus_status'] = f"Connected ({ip})"
+                    self.current_values['testere_durumu'] = "Awaiting data..."
+                    status_text = "Awaiting data..."
                 else:
-                    self.current_values['modbus_status'] = f"Bağlantı Yok ({ip})"
-                    self.current_values['testere_durumu'] = "Bağlantı Yok"
-                    status_text = "Bağlantı Yok"
+                    self.current_values['modbus_status'] = f"No Connection ({ip})"
+                    self.current_values['testere_durumu'] = "No Connection"
+                    status_text = "No Connection"
 
             self.labelSystemStatusInfo.setText(status_text)
             self._update_status_icon(status_text)
@@ -2311,16 +2311,16 @@ class ControlPanelController(QWidget):
             if testere_durumu == 3:  # KESIM_YAPILIYOR
                 current = float(data.get('serit_motor_akim_a', 0))
                 if current > 25:
-                    self.add_log(f"Yüksek motor akımı: {current:.2f}A", "WARNING")
+                    self.add_log(f"High motor current: {current:.2f}A", "WARNING")
                 elif current > 30:
-                    self.add_log(f"Kritik motor akımı: {current:.2f}A", "ERROR")
+                    self.add_log(f"Critical motor current: {current:.2f}A", "ERROR")
 
                 # Check deviation during cutting
                 deviation = float(data.get('serit_sapmasi', 0))
                 if abs(deviation) > 0.4:
-                    self.add_log(f"Yüksek şerit sapması: {deviation:.2f}mm", "WARNING")
+                    self.add_log(f"High band deviation: {deviation:.2f}mm", "WARNING")
                 elif abs(deviation) > 0.6:
-                    self.add_log(f"Kritik şerit sapması: {deviation:.2f}mm", "ERROR")
+                    self.add_log(f"Critical band deviation: {deviation:.2f}mm", "ERROR")
 
         except Exception as e:
             logger.error(f"Critical values check error: {e}")
@@ -2332,18 +2332,18 @@ class ControlPanelController(QWidget):
     def _get_status_message(self, status_text):
         """Get user-friendly status message."""
         status_messages = {
-            "BAĞLANTI BEKLENİYOR": "PLC bağlantısı bekleniyor...",
-            "BOŞTA": "Boşta.",
-            "HİDROLİK AKTİF": "Makine kesime hazır.",
-            "ŞERİT MOTOR ÇALIŞIYOR": "Şerit motor çalışıyor!",
-            "KESİM YAPILIYOR": "Kesim yapılıyor!",
-            "KESİM BİTTİ": "Kesim bitti!",
-            "ŞERİT YUKARI ÇIKIYOR": "Şerit yukarı çıkıyor.",
-            "MALZEME BESLEME": "Kesilecek malzeme konumlandırılıyor.",
-            "BİLİNMİYOR": "Bilinmiyor!",
-            "Bağlantı Yok": "Bağlantı bekleniyor...",
-            "Veri bekleniyor...": "Veri akışı bekleniyor...",
-            "Bağlantı Kontrol Ediliyor...": "Bağlantı kontrol ediliyor..."
+            "AWAITING CONNECTION": "Waiting for PLC connection...",
+            "IDLE": "Idle.",
+            "HYDRAULIC ACTIVE": "Machine ready for cutting.",
+            "BAND MOTOR RUNNING": "Band motor running!",
+            "CUTTING": "Cutting in progress!",
+            "CUTTING COMPLETE": "Cutting complete!",
+            "SAW RISING": "Saw rising.",
+            "MATERIAL FEEDING": "Positioning material for cutting.",
+            "UNKNOWN": "Unknown!",
+            "No Connection": "Waiting for connection...",
+            "Awaiting data...": "Waiting for data stream...",
+            "Checking Connection...": "Checking connection..."
         }
 
         self._update_status_icon(status_text)
@@ -2352,18 +2352,18 @@ class ControlPanelController(QWidget):
     def _get_status_icon_path(self, status_text):
         """Get icon path for status."""
         status_icons = {
-            "BAĞLANTI BEKLENİYOR": "baglanti-kontrol-ediliyor.png",
-            "BOŞTA": "bosta.png",
-            "HİDROLİK AKTİF": "okey-icon.svg",
-            "ŞERİT MOTOR ÇALIŞIYOR": "serit-motor-calisiyor.png",
-            "KESİM YAPILIYOR": "kesim-yapiliyor.png",
-            "KESİM BİTTİ": "okey-icon.svg",
-            "ŞERİT YUKARI ÇIKIYOR": "serit-motor-calisiyor.png",
-            "MALZEME BESLEME": "malzeme-besleme.png",
-            "BİLİNMİYOR": "okey-icon.svg",
-            "Bağlantı Yok": "baglanti-yok.png",
-            "Veri bekleniyor...": "baglanti-kontrol-ediliyor.png",
-            "Bağlantı Kontrol Ediliyor...": "baglanti-kontrol-ediliyor.png"
+            "AWAITING CONNECTION": "baglanti-kontrol-ediliyor.png",
+            "IDLE": "bosta.png",
+            "HYDRAULIC ACTIVE": "okey-icon.svg",
+            "BAND MOTOR RUNNING": "serit-motor-calisiyor.png",
+            "CUTTING": "kesim-yapiliyor.png",
+            "CUTTING COMPLETE": "okey-icon.svg",
+            "SAW RISING": "serit-motor-calisiyor.png",
+            "MATERIAL FEEDING": "malzeme-besleme.png",
+            "UNKNOWN": "okey-icon.svg",
+            "No Connection": "baglanti-yok.png",
+            "Awaiting data...": "baglanti-kontrol-ediliyor.png",
+            "Checking Connection...": "baglanti-kontrol-ediliyor.png"
         }
         return status_icons.get(status_text, "baglanti-kontrol-ediliyor.png")
 

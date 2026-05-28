@@ -5,7 +5,7 @@ System constants, enums, and configuration values.
 from enum import Enum
 
 
-class TesereDurumu(Enum):
+class SawState(Enum):
     """Saw machine states."""
     IDLE = 0
     PREPARING = 1
@@ -13,6 +13,10 @@ class TesereDurumu(Enum):
     CUTTING = 3
     COMPLETED = 4
     ERROR = 5
+
+
+# Backward-compatible alias
+TesereDurumu = SawState
 
 
 class ControlMode(Enum):
@@ -25,7 +29,8 @@ class ControlMode(Enum):
 # Buffer sizes match old working project: 3 samples for averaging
 BUFFER_SIZE = 3  # Standard buffer size for ML input averaging (matches old project)
 TORQUE_BUFFER_SIZE = 3  # Torque buffer (matches old project)
-KATSAYI = 1.0  # Global ML coefficient multiplier
+COEFFICIENT = 1.0  # Global ML coefficient multiplier
+KATSAYI = COEFFICIENT  # Backward-compatible alias
 
 # Torque Guard Parameters (matches old project values)
 ENABLE_TORQUE_GUARD = True
@@ -43,14 +48,17 @@ TORQUE_TO_CURRENT_A1 = -0.278
 TORQUE_TO_CURRENT_A0 = 15.656
 
 # Speed Change Write Thresholds
-INME_HIZI_WRITE_THRESHOLD = 1.0  # mm/min
-KESME_HIZI_WRITE_THRESHOLD = 0.9  # mm/min
+DESCENT_SPEED_WRITE_THRESHOLD = 1.0   # mm/min
+CUTTING_SPEED_WRITE_THRESHOLD = 0.9   # mm/min
+# Backward-compatible aliases
+INME_HIZI_WRITE_THRESHOLD = DESCENT_SPEED_WRITE_THRESHOLD
+KESME_HIZI_WRITE_THRESHOLD = CUTTING_SPEED_WRITE_THRESHOLD
 
 # Speed Limits (default, overridden by config)
 # Matches old project values
 SPEED_LIMITS = {
-    'kesme': {'min': 40.0, 'max': 90.0},
-    'inme': {'min': 10.0, 'max': 60.0}
+    'cutting': {'min': 40.0, 'max': 90.0},
+    'descent': {'min': 10.0, 'max': 60.0}
 }
 
 # Update Intervals

@@ -183,7 +183,7 @@ class MonitoringController(QWidget):
         self.FrameMakineID.setGeometry(20, 27, 260, 105)
         self.FrameMakineID.setStyleSheet(inner_frame_style)
 
-        self.labelMakineID = QLabel("Makine ID", self.FrameMakineID)
+        self.labelMakineID = QLabel("Machine ID", self.FrameMakineID)
         self.labelMakineID.setGeometry(33, 20, 201, 20)
         self.labelMakineID.setStyleSheet(label_name_style)
 
@@ -197,7 +197,7 @@ class MonitoringController(QWidget):
         self.FrameSeritID.setGeometry(297, 27, 260, 105)
         self.FrameSeritID.setStyleSheet(inner_frame_style)
 
-        self.labelSeritID = QLabel("Şerit ID", self.FrameSeritID)
+        self.labelSeritID = QLabel("Band ID", self.FrameSeritID)
         self.labelSeritID.setGeometry(33, 20, 201, 20)
         self.labelSeritID.setStyleSheet(label_name_style)
 
@@ -211,7 +211,7 @@ class MonitoringController(QWidget):
         self.FrameSeritDisOlcusu.setGeometry(20, 166, 260, 105)
         self.FrameSeritDisOlcusu.setStyleSheet(inner_frame_style)
 
-        self.labelSeritDisOlcusu = QLabel("Şerit Dış Ölçüsü", self.FrameSeritDisOlcusu)
+        self.labelSeritDisOlcusu = QLabel("Band Outer Dimension", self.FrameSeritDisOlcusu)
         self.labelSeritDisOlcusu.setGeometry(33, 20, 201, 20)
         self.labelSeritDisOlcusu.setStyleSheet(label_name_style)
 
@@ -225,7 +225,7 @@ class MonitoringController(QWidget):
         self.FrameSeritTipi.setGeometry(297, 166, 260, 105)
         self.FrameSeritTipi.setStyleSheet(inner_frame_style)
 
-        self.labelSeritTipi = QLabel("Şerit Tipi", self.FrameSeritTipi)
+        self.labelSeritTipi = QLabel("Band Type", self.FrameSeritTipi)
         self.labelSeritTipi.setGeometry(33, 20, 201, 20)
         self.labelSeritTipi.setStyleSheet(label_name_style)
 
@@ -239,7 +239,7 @@ class MonitoringController(QWidget):
         self.FrameSeritMarkasi.setGeometry(20, 306, 260, 105)
         self.FrameSeritMarkasi.setStyleSheet(inner_frame_style)
 
-        self.labelSeritMarkasi = QLabel("Şerit Markası", self.FrameSeritMarkasi)
+        self.labelSeritMarkasi = QLabel("Band Brand", self.FrameSeritMarkasi)
         self.labelSeritMarkasi.setGeometry(33, 20, 201, 20)
         self.labelSeritMarkasi.setStyleSheet(label_name_style)
 
@@ -253,7 +253,7 @@ class MonitoringController(QWidget):
         self.FrameSeritMalzemesi.setGeometry(297, 306, 260, 105)
         self.FrameSeritMalzemesi.setStyleSheet(inner_frame_style)
 
-        self.labelBandSeritMalzemesi = QLabel("Şerit Malzemesi", self.FrameSeritMalzemesi)
+        self.labelBandSeritMalzemesi = QLabel("Band Material", self.FrameSeritMalzemesi)
         self.labelBandSeritMalzemesi.setGeometry(33, 20, 201, 20)
         self.labelBandSeritMalzemesi.setStyleSheet(label_name_style)
 
@@ -276,7 +276,7 @@ class MonitoringController(QWidget):
         self.FrameSeritMotorHiz.setGeometry(20, 27, 260, 105)
         self.FrameSeritMotorHiz.setStyleSheet(inner_frame_style)
 
-        self.labelSeritMotorHiz = QLabel("Şerit Motor Hızı (m/dk)", self.FrameSeritMotorHiz)
+        self.labelSeritMotorHiz = QLabel("Band Motor Speed (m/min)", self.FrameSeritMotorHiz)
         self.labelSeritMotorHiz.setGeometry(33, 20, 201, 20)
         self.labelSeritMotorHiz.setStyleSheet(label_name_style)
 
@@ -290,7 +290,7 @@ class MonitoringController(QWidget):
         self.FrameInmeMotorHiz.setGeometry(297, 27, 260, 105)
         self.FrameInmeMotorHiz.setStyleSheet(inner_frame_style)
 
-        self.labelInmeMotorHiz = QLabel("İlerleme Motor Hızı (mm/dk)", self.FrameInmeMotorHiz)
+        self.labelInmeMotorHiz = QLabel("Descent Motor Speed (mm/min)", self.FrameInmeMotorHiz)
         self.labelInmeMotorHiz.setGeometry(33, 20, 201, 20)
         self.labelInmeMotorHiz.setStyleSheet(label_name_style + " QLabel { font-size: 16px; }")
 
@@ -304,7 +304,7 @@ class MonitoringController(QWidget):
         self.FrameSeritMotorAkim.setGeometry(20, 166, 260, 105)
         self.FrameSeritMotorAkim.setStyleSheet(inner_frame_style)
 
-        self.labelSeritMotorAkim = QLabel("Şerit Motor Akımı (A)", self.FrameSeritMotorAkim)
+        self.labelSeritMotorAkim = QLabel("Band Motor Current (A)", self.FrameSeritMotorAkim)
         self.labelSeritMotorAkim.setGeometry(33, 20, 211, 20)
         self.labelSeritMotorAkim.setStyleSheet(label_name_style)
 
@@ -318,7 +318,7 @@ class MonitoringController(QWidget):
         self.FrameInmeMotorAkim.setGeometry(297, 166, 260, 105)
         self.FrameInmeMotorAkim.setStyleSheet(inner_frame_style)
 
-        self.labelInmeMotorAkim = QLabel("İlerleme Motor Akımı (A)", self.FrameInmeMotorAkim)
+        self.labelInmeMotorAkim = QLabel("Descent Motor Current (A)", self.FrameInmeMotorAkim)
         self.labelInmeMotorAkim.setGeometry(33, 20, 211, 20)
         self.labelInmeMotorAkim.setStyleSheet(label_name_style + " QLabel { font-size: 18px; }")
 
@@ -332,7 +332,7 @@ class MonitoringController(QWidget):
         self.FrameSeritMotorTork.setGeometry(20, 306, 260, 105)
         self.FrameSeritMotorTork.setStyleSheet(inner_frame_style)
 
-        self.labelSeritMotorTork = QLabel("Şerit Motor Torku (%)", self.FrameSeritMotorTork)
+        self.labelSeritMotorTork = QLabel("Band Motor Torque (%)", self.FrameSeritMotorTork)
         self.labelSeritMotorTork.setGeometry(33, 20, 201, 20)
         self.labelSeritMotorTork.setStyleSheet(label_name_style)
 
@@ -346,7 +346,7 @@ class MonitoringController(QWidget):
         self.FrameInmeMotorTork.setGeometry(297, 306, 260, 105)
         self.FrameInmeMotorTork.setStyleSheet(inner_frame_style)
 
-        self.labelInmeMotorTork = QLabel("İlerleme Motor Torku (%)", self.FrameInmeMotorTork)
+        self.labelInmeMotorTork = QLabel("Descent Motor Torque (%)", self.FrameInmeMotorTork)
         self.labelInmeMotorTork.setGeometry(33, 20, 211, 20)
         self.labelInmeMotorTork.setStyleSheet(label_name_style + " QLabel { font-size: 18px; }")
 
@@ -360,7 +360,7 @@ class MonitoringController(QWidget):
         self.FrameGucKwh.setGeometry(20, 420, 537, 60)
         self.FrameGucKwh.setStyleSheet(inner_frame_style)
 
-        self.labelGucKwh = QLabel("Güç (kWh)", self.FrameGucKwh)
+        self.labelGucKwh = QLabel("Power (kWh)", self.FrameGucKwh)
         self.labelGucKwh.setGeometry(33, 10, 201, 20)
         self.labelGucKwh.setStyleSheet(label_name_style)
 
@@ -382,7 +382,7 @@ class MonitoringController(QWidget):
         self.FrameMalzemeCinsi.setGeometry(20, 27, 260, 105)
         self.FrameMalzemeCinsi.setStyleSheet(inner_frame_style)
 
-        self.labelMalzemeCinsi = QLabel("Malzeme Cinsi", self.FrameMalzemeCinsi)
+        self.labelMalzemeCinsi = QLabel("Material Type", self.FrameMalzemeCinsi)
         self.labelMalzemeCinsi.setGeometry(33, 20, 201, 20)
         self.labelMalzemeCinsi.setStyleSheet(label_name_style)
 
@@ -396,7 +396,7 @@ class MonitoringController(QWidget):
         self.FrameMalzemeSertligi.setGeometry(300, 27, 260, 105)
         self.FrameMalzemeSertligi.setStyleSheet(inner_frame_style)
 
-        self.labelMalzemeSertligi = QLabel("Malzeme Sertliği", self.FrameMalzemeSertligi)
+        self.labelMalzemeSertligi = QLabel("Material Hardness", self.FrameMalzemeSertligi)
         self.labelMalzemeSertligi.setGeometry(33, 20, 211, 31)
         self.labelMalzemeSertligi.setStyleSheet(label_name_style)
 
@@ -410,7 +410,7 @@ class MonitoringController(QWidget):
         self.FrameKesitYapisi.setGeometry(580, 27, 260, 105)
         self.FrameKesitYapisi.setStyleSheet(inner_frame_style)
 
-        self.labelKesitYapisi = QLabel("Kesit Yapısı", self.FrameKesitYapisi)
+        self.labelKesitYapisi = QLabel("Cross Section", self.FrameKesitYapisi)
         self.labelKesitYapisi.setGeometry(33, 20, 201, 31)
         self.labelKesitYapisi.setStyleSheet(label_name_style)
 
@@ -473,7 +473,7 @@ class MonitoringController(QWidget):
         self.FrameSeritSapmasi.setGeometry(20, 27, 260, 105)
         self.FrameSeritSapmasi.setStyleSheet(inner_frame_style)
 
-        self.labelSeritSapmasi = QLabel("Şerit Sapması", self.FrameSeritSapmasi)
+        self.labelSeritSapmasi = QLabel("Band Deviation", self.FrameSeritSapmasi)
         self.labelSeritSapmasi.setGeometry(33, 20, 201, 20)
         self.labelSeritSapmasi.setStyleSheet(label_name_style)
 
@@ -487,7 +487,7 @@ class MonitoringController(QWidget):
         self.FrameSeritGerginligi.setGeometry(300, 27, 260, 105)
         self.FrameSeritGerginligi.setStyleSheet(inner_frame_style)
 
-        self.labelSeritGerginligi = QLabel("Şerit Gerginliği (bar)", self.FrameSeritGerginligi)
+        self.labelSeritGerginligi = QLabel("Band Tension (bar)", self.FrameSeritGerginligi)
         self.labelSeritGerginligi.setGeometry(33, 20, 211, 20)
         self.labelSeritGerginligi.setStyleSheet(label_name_style)
 
@@ -501,7 +501,7 @@ class MonitoringController(QWidget):
         self.FrameKafaYuksekligi.setGeometry(580, 27, 260, 105)
         self.FrameKafaYuksekligi.setStyleSheet(inner_frame_style)
 
-        self.labelKafaYuksekligi = QLabel("Kafa Yüksekliği (mm)", self.FrameKafaYuksekligi)
+        self.labelKafaYuksekligi = QLabel("Head Height (mm)", self.FrameKafaYuksekligi)
         self.labelKafaYuksekligi.setGeometry(33, 20, 211, 20)
         self.labelKafaYuksekligi.setStyleSheet(label_name_style)
 
@@ -515,7 +515,7 @@ class MonitoringController(QWidget):
         self.FrameTitresimX.setGeometry(20, 154, 260, 105)
         self.FrameTitresimX.setStyleSheet(inner_frame_style)
 
-        self.labelTitresimX = QLabel("Titreşim X", self.FrameTitresimX)
+        self.labelTitresimX = QLabel("Vibration X", self.FrameTitresimX)
         self.labelTitresimX.setGeometry(33, 20, 201, 20)
         self.labelTitresimX.setStyleSheet(label_name_style)
 
@@ -529,7 +529,7 @@ class MonitoringController(QWidget):
         self.FrameTitresimY.setGeometry(300, 154, 260, 105)
         self.FrameTitresimY.setStyleSheet(inner_frame_style)
 
-        self.labelTitresimY = QLabel("Titreşim Y", self.FrameTitresimY)
+        self.labelTitresimY = QLabel("Vibration Y", self.FrameTitresimY)
         self.labelTitresimY.setGeometry(33, 20, 201, 20)
         self.labelTitresimY.setStyleSheet(label_name_style)
 
@@ -543,7 +543,7 @@ class MonitoringController(QWidget):
         self.FrameTitresimZ.setGeometry(580, 154, 260, 105)
         self.FrameTitresimZ.setStyleSheet(inner_frame_style)
 
-        self.labelTitresimZ = QLabel("Titreşim Z", self.FrameTitresimZ)
+        self.labelTitresimZ = QLabel("Vibration Z", self.FrameTitresimZ)
         self.labelTitresimZ.setGeometry(33, 20, 201, 20)
         self.labelTitresimZ.setStyleSheet(label_name_style)
 
@@ -557,7 +557,7 @@ class MonitoringController(QWidget):
         self.FrameMengeneBasinci.setGeometry(20, 281, 260, 105)
         self.FrameMengeneBasinci.setStyleSheet(inner_frame_style)
 
-        self.labelMengeneBasinci = QLabel("Mengene Basıncı (bar)", self.FrameMengeneBasinci)
+        self.labelMengeneBasinci = QLabel("Vise Pressure (bar)", self.FrameMengeneBasinci)
         self.labelMengeneBasinci.setGeometry(33, 20, 211, 20)
         self.labelMengeneBasinci.setStyleSheet(label_name_style)
 
@@ -571,7 +571,7 @@ class MonitoringController(QWidget):
         self.FrameOrtamSicakligi.setGeometry(300, 281, 260, 105)
         self.FrameOrtamSicakligi.setStyleSheet(inner_frame_style)
 
-        self.labelOrtamSicakligi = QLabel("Ortam Sıcaklığı (°C)", self.FrameOrtamSicakligi)
+        self.labelOrtamSicakligi = QLabel("Ambient Temperature (°C)", self.FrameOrtamSicakligi)
         self.labelOrtamSicakligi.setGeometry(33, 20, 211, 20)
         self.labelOrtamSicakligi.setStyleSheet(label_name_style)
 
@@ -585,7 +585,7 @@ class MonitoringController(QWidget):
         self.FrameOrtamNem.setGeometry(580, 281, 260, 105)
         self.FrameOrtamNem.setStyleSheet(inner_frame_style)
 
-        self.labelOrtamNem = QLabel("Ortam Nem (%)", self.FrameOrtamNem)
+        self.labelOrtamNem = QLabel("Ambient Humidity (%)", self.FrameOrtamNem)
         self.labelOrtamNem.setGeometry(33, 20, 201, 20)
         self.labelOrtamNem.setStyleSheet(label_name_style)
 
@@ -607,7 +607,7 @@ class MonitoringController(QWidget):
         self.FrameKesilenParcaAdeti.setGeometry(20, 27, 260, 105)
         self.FrameKesilenParcaAdeti.setStyleSheet(inner_frame_style)
 
-        self.labelKesilenParcaAdeti = QLabel("Kesilen Parça Adeti", self.FrameKesilenParcaAdeti)
+        self.labelKesilenParcaAdeti = QLabel("Pieces Cut", self.FrameKesilenParcaAdeti)
         self.labelKesilenParcaAdeti.setGeometry(33, 20, 211, 31)
         self.labelKesilenParcaAdeti.setStyleSheet(label_name_style)
 
@@ -621,7 +621,7 @@ class MonitoringController(QWidget):
         self.FrameTestereDurum.setGeometry(300, 27, 260, 105)
         self.FrameTestereDurum.setStyleSheet(inner_frame_style)
 
-        self.labelTestereDurum = QLabel("Testere Durumu", self.FrameTestereDurum)
+        self.labelTestereDurum = QLabel("Saw Status", self.FrameTestereDurum)
         self.labelTestereDurum.setGeometry(33, 20, 201, 20)
         self.labelTestereDurum.setStyleSheet(label_name_style)
 
@@ -643,7 +643,7 @@ class MonitoringController(QWidget):
         self.FrameAlarm.setGeometry(580, 27, 260, 105)
         self.FrameAlarm.setStyleSheet(inner_frame_style)
 
-        self.labelAlarmStatus = QLabel("Alarm Durumu", self.FrameAlarm)
+        self.labelAlarmStatus = QLabel("Alarm Status", self.FrameAlarm)
         self.labelAlarmStatus.setGeometry(33, 20, 211, 20)
         self.labelAlarmStatus.setStyleSheet(label_name_style)
 
@@ -745,14 +745,14 @@ class MonitoringController(QWidget):
                 if isinstance(testere_durumu, (int, float)):
                     durum_text = {
                         -1: "BAĞLANTI BEKLENİYOR",  # Special value when Modbus not connected
-                        0: "BOŞTA",
-                        1: "HİDROLİK AKTİF",
-                        2: "ŞERİT MOTOR ÇALIŞIYOR",
-                        3: "KESİM YAPILIYOR",
-                        4: "KESİM BİTTİ",
-                        5: "ŞERİT YUKARI ÇIKIYOR",
+                        0: "IDLE",
+                        1: "HYDRAULIC ACTIVE",
+                        2: "BAND MOTOR RUNNING",
+                        3: "CUTTING",
+                        4: "CUTTING COMPLETE",
+                        5: "SAW RISING",
                         6: "MALZEME BESLEME"
-                    }.get(int(testere_durumu), "BİLİNMİYOR")
+                    }.get(int(testere_durumu), "UNKNOWN")
                     self.current_values['testere_durumu'] = durum_text
                 else:
                     self.current_values['testere_durumu'] = processed_data.get('testere_durumu', '—')

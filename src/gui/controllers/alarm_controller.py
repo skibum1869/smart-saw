@@ -30,20 +30,20 @@ logger = logging.getLogger(__name__)
 
 # Alarm code bitmask → description (register 1032)
 ALARM_CODES = {
-    0x0001: "Acil Buton Basılı",
-    0x0002: "Kesme Motor Arıza",
-    0x0004: "Hidrolik Motor Arıza",
-    0x0008: "Soğutma Motor Arıza",
-    0x0010: "Konveyor Motor Arıza",
-    0x0020: "Fırça Motor Arıza",
-    0x0040: "Kasnak Kapak Açık",
-    0x0080: "Şerit Kopma Arıza",
-    0x0100: "Servo Motor Aşırı Yük",
-    0x0200: "Servo Motor Yüksek Sıcaklık",
-    0x0400: "Şerit Motor Arıza",
-    0x0800: "Ölçü Hesap Hatası",
-    0x1000: "Ön Mengene Hatası",
-    0x2000: "Servo Hata Direnç",
+    0x0001: "Emergency Button Pressed",
+    0x0002: "Cutting Motor Fault",
+    0x0004: "Hydraulic Motor Fault",
+    0x0008: "Coolant Motor Fault",
+    0x0010: "Conveyor Motor Fault",
+    0x0020: "Brush Motor Fault",
+    0x0040: "Pulley Cover Open",
+    0x0080: "Band Break Fault",
+    0x0100: "Servo Motor Overload",
+    0x0200: "Servo Motor High Temperature",
+    0x0400: "Band Motor Fault",
+    0x0800: "Measurement Calculation Error",
+    0x1000: "Front Vise Error",
+    0x2000: "Servo Resistance Error",
 }
 
 DB_PATH = Path(__file__).parent.parent.parent.parent / "data" / "databases" / "current" / "alarm.db"
@@ -173,7 +173,7 @@ class AlarmController(QWidget):
         self.titleFrame.setGeometry(30, 127, 1468, 60)
         self.titleFrame.setStyleSheet(frame_style)
 
-        self.labelTitle = QLabel("Makine Alarmları", self.titleFrame)
+        self.labelTitle = QLabel("Machine Alarms", self.titleFrame)
         self.labelTitle.setGeometry(20, 13, 400, 34)
         self.labelTitle.setStyleSheet(title_style)
 
@@ -191,7 +191,7 @@ class AlarmController(QWidget):
         self.tableAlarms.setGeometry(30, 200, 1468, 780)
         self.tableAlarms.setColumnCount(4)
         self.tableAlarms.setHorizontalHeaderLabels(
-            ["Zaman", "Alarm Kodu", "Açıklama", "Durum"]
+            ["Time", "Alarm Code", "Description", "Status"]
         )
         self.tableAlarms.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.tableAlarms.setSelectionBehavior(QAbstractItemView.SelectRows)
@@ -253,7 +253,7 @@ class AlarmController(QWidget):
         self.tableAlarms.setStyleSheet(table_style)
 
         # Reset button
-        self.btnReset = QPushButton("Alarmları Sıfırla", self)
+        self.btnReset = QPushButton("Reset Alarms", self)
         self.btnReset.setGeometry(30, 995, 300, 60)
         self.btnReset.setCursor(Qt.PointingHandCursor)
         self.btnReset.setStyleSheet("""
@@ -369,7 +369,7 @@ class AlarmController(QWidget):
 
                 color = QColor("#DC2626") if is_active else QColor("#F4F6FC")
                 font = font_bold if is_active else font_normal
-                status_text = "AKTİF" if is_active else "Çözüldü"
+                status_text = "ACTIVE" if is_active else "Resolved"
 
                 ts_display = ts.replace("T", " ") if ts else ""
                 code_hex = f"0x{code:04X}"
@@ -383,7 +383,7 @@ class AlarmController(QWidget):
                 self.tableAlarms.setRowHeight(i, 48)
 
             if active_count > 0:
-                self.labelActiveCount.setText(f"{active_count} aktif alarm")
+                self.labelActiveCount.setText(f"{active_count} active alarm(s)")
             else:
                 self.labelActiveCount.setText("")
 

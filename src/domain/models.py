@@ -6,7 +6,7 @@ from dataclasses import dataclass, field, asdict
 from datetime import datetime
 from typing import Optional, Dict, Any
 
-from .enums import TesereDurumu, ControlMode
+from .enums import SawState, TesereDurumu, ControlMode
 
 
 @dataclass

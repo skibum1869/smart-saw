@@ -195,7 +195,7 @@ class PositioningController(QWidget):
         self.mengeneKontroluFrame.setGeometry(33, 127, 461, 939)
         self.mengeneKontroluFrame.setStyleSheet(frame_style)
 
-        self.labelMengeneKontrolu = QLabel("Mengene Kontrolü", self.mengeneKontroluFrame)
+        self.labelMengeneKontrolu = QLabel("Vise Control", self.mengeneKontroluFrame)
         self.labelMengeneKontrolu.setGeometry(4, 19, 451, 45)
         self.labelMengeneKontrolu.setStyleSheet(label_title_style)
         self.labelMengeneKontrolu.setAlignment(Qt.AlignCenter)
@@ -246,7 +246,7 @@ class PositioningController(QWidget):
         self.malzemeKonumlandirmaFrame.setStyleSheet(frame_style)
 
         self.labelMalzemeKonumlandirma = QLabel(
-            "Malzeme Konumlandırma",
+            "Material Positioning",
             self.malzemeKonumlandirmaFrame
         )
         self.labelMalzemeKonumlandirma.setGeometry(4, 19, 471, 45)
@@ -304,7 +304,7 @@ class PositioningController(QWidget):
         self.testereKonumlandirmaFrame.setStyleSheet(frame_style)
 
         self.labelTestereKonumlandirma = QLabel(
-            "Testere Konumlandırma",
+            "Saw Positioning",
             self.testereKonumlandirmaFrame
         )
         self.labelTestereKonumlandirma.setGeometry(4, 19, 451, 45)

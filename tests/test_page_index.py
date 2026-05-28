@@ -11,12 +11,19 @@ from src.gui.page_index import PageIndex
 
 def test_page_index_values():
     """All 7 PageIndex members must have their specified integer values."""
+    assert PageIndex.CONTROL_PANEL == 0
+    assert PageIndex.AUTO_CUTTING == 1
+    assert PageIndex.POSITIONING == 2
+    assert PageIndex.SENSOR == 3
+    assert PageIndex.MONITORING == 4
+    assert PageIndex.ALARM == 5
+    assert PageIndex.CAMERA == 6
+
+    # Backward-compatible Turkish aliases
     assert PageIndex.KONTROL_PANELI == 0
     assert PageIndex.OTOMATIK_KESIM == 1
     assert PageIndex.KONUMLANDIRMA == 2
-    assert PageIndex.SENSOR == 3
     assert PageIndex.IZLEME == 4
-    assert PageIndex.ALARM == 5
     assert PageIndex.KAMERA == 6
 
 

@@ -5,19 +5,23 @@ Domain enumerations.
 from enum import Enum
 
 
-class TesereDurumu(Enum):
+class SawState(Enum):
     """
     Saw machine operational states.
 
     Values match Modbus register values from PLC.
     """
-    BOSTA = 0              # BOŞTA - Machine is idle
-    HIDROLIK_AKTIF = 1     # HİDROLİK AKTİF - Hydraulic active
-    SERIT_MOTOR = 2        # ŞERİT MOTOR ÇALIŞIYOR - Band motor running
-    KESIYOR = 3            # KESİM YAPILIYOR - Actively cutting
-    KESIM_BITTI = 4        # KESİM BİTTİ - Cutting completed
-    SERIT_YUKARI = 5       # ŞERİT YUKARI ÇIKIYOR - Saw moving up
-    MALZEME_BESLEME = 6    # MALZEME BESLEME - Material feeding
+    IDLE = 0                # Machine is idle
+    HYDRAULIC_ACTIVE = 1    # Hydraulic active
+    BAND_MOTOR_RUNNING = 2  # Band motor running
+    CUTTING = 3             # Actively cutting
+    CUTTING_COMPLETE = 4    # Cutting completed
+    SAW_RISING = 5          # Saw moving up
+    MATERIAL_FEEDING = 6    # Material feeding
+
+
+# Backward-compatible alias
+TesereDurumu = SawState
 
 
 class ControlMode(Enum):

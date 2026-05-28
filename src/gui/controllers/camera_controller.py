@@ -124,7 +124,7 @@ class CameraController(QWidget):
         self.kamera_frame.setGeometry(20, 20, 934, 525)
         self.kamera_frame.setStyleSheet(_FRAME_STYLE)
 
-        lbl_kamera_title = QLabel("Kamera Görüntüsü", self.kamera_frame)
+        lbl_kamera_title = QLabel("Camera Feed", self.kamera_frame)
         lbl_kamera_title.setGeometry(20, 12, 300, 30)
         lbl_kamera_title.setStyleSheet(_TITLE_STYLE)
 
@@ -135,14 +135,14 @@ class CameraController(QWidget):
             "QLabel { background-color: #1A1F37; border-radius: 10px; "
             "color: rgba(244,246,252,80); font-size: 16px; }"
         )
-        self.camera_label.setText("Kamera bekleniyor…")
+        self.camera_label.setText("Waiting for camera…")
 
         # ── Sequential thumbnails frame ──────────────────────────────
         self.sirali_frame = QFrame(self)
         self.sirali_frame.setGeometry(20, 555, 934, 170)
         self.sirali_frame.setStyleSheet(_FRAME_STYLE)
 
-        lbl_sirali_title = QLabel("Sıralı Görüntüler", self.sirali_frame)
+        lbl_sirali_title = QLabel("Sequential Frames", self.sirali_frame)
         lbl_sirali_title.setGeometry(20, 10, 300, 26)
         lbl_sirali_title.setStyleSheet(_TITLE_STYLE)
 
@@ -167,12 +167,12 @@ class CameraController(QWidget):
         self.kirik_frame.setGeometry(970, 20, 538, 350)
         self.kirik_frame.setStyleSheet(_FRAME_STYLE)
 
-        lbl_kirik_title = QLabel("Kırık Diş Tespiti", self.kirik_frame)
+        lbl_kirik_title = QLabel("Broken Tooth Detection", self.kirik_frame)
         lbl_kirik_title.setGeometry(20, 15, 300, 30)
         lbl_kirik_title.setStyleSheet(_TITLE_STYLE)
 
         # Broken count
-        lbl_broken_name = QLabel("Kırık Diş Sayısı", self.kirik_frame)
+        lbl_broken_name = QLabel("Broken Tooth Count", self.kirik_frame)
         lbl_broken_name.setGeometry(16, 60, 200, 22)
         lbl_broken_name.setStyleSheet(_SUBTITLE_STYLE)
 
@@ -181,7 +181,7 @@ class CameraController(QWidget):
         self.lbl_broken_count.setStyleSheet(_VALUE_STYLE)
 
         # Tooth count
-        lbl_tooth_name = QLabel("Toplam Diş Sayısı", self.kirik_frame)
+        lbl_tooth_name = QLabel("Total Tooth Count", self.kirik_frame)
         lbl_tooth_name.setGeometry(16, 140, 200, 22)
         lbl_tooth_name.setStyleSheet(_SUBTITLE_STYLE)
 
@@ -190,7 +190,7 @@ class CameraController(QWidget):
         self.lbl_tooth_count.setStyleSheet(_VALUE_STYLE)
 
         # Last detection timestamp
-        lbl_kirik_ts_name = QLabel("Son Tespit", self.kirik_frame)
+        lbl_kirik_ts_name = QLabel("Last Detection", self.kirik_frame)
         lbl_kirik_ts_name.setGeometry(16, 225, 200, 22)
         lbl_kirik_ts_name.setStyleSheet(_SUBTITLE_STYLE)
 
@@ -209,12 +209,12 @@ class CameraController(QWidget):
         self.catlak_frame.setGeometry(970, 385, 538, 350)
         self.catlak_frame.setStyleSheet(_FRAME_STYLE)
 
-        lbl_catlak_title = QLabel("Çatlak Tespiti", self.catlak_frame)
+        lbl_catlak_title = QLabel("Crack Detection", self.catlak_frame)
         lbl_catlak_title.setGeometry(20, 15, 300, 30)
         lbl_catlak_title.setStyleSheet(_TITLE_STYLE)
 
         # Crack count
-        lbl_crack_name = QLabel("Çatlak Sayısı", self.catlak_frame)
+        lbl_crack_name = QLabel("Crack Count", self.catlak_frame)
         lbl_crack_name.setGeometry(16, 60, 200, 22)
         lbl_crack_name.setStyleSheet(_SUBTITLE_STYLE)
 
@@ -223,7 +223,7 @@ class CameraController(QWidget):
         self.lbl_crack_count.setStyleSheet(_VALUE_STYLE)
 
         # Last detection timestamp
-        lbl_catlak_ts_name = QLabel("Son Tespit", self.catlak_frame)
+        lbl_catlak_ts_name = QLabel("Last Detection", self.catlak_frame)
         lbl_catlak_ts_name.setGeometry(16, 145, 200, 22)
         lbl_catlak_ts_name.setStyleSheet(_SUBTITLE_STYLE)
 
@@ -242,7 +242,7 @@ class CameraController(QWidget):
         self.asinma_frame.setGeometry(20, 740, 300, 120)
         self.asinma_frame.setStyleSheet(_FRAME_STYLE)
 
-        lbl_asinma_title = QLabel("Aşınma Yüzdesi", self.asinma_frame)
+        lbl_asinma_title = QLabel("Wear Percentage", self.asinma_frame)
         lbl_asinma_title.setGeometry(16, 10, 270, 26)
         lbl_asinma_title.setStyleSheet(_TITLE_STYLE)
 
@@ -278,7 +278,7 @@ class CameraController(QWidget):
         self.saglik_frame.setGeometry(340, 740, 300, 120)
         self.saglik_frame.setStyleSheet(_FRAME_STYLE)
 
-        lbl_saglik_title = QLabel("Testere Sağlığı", self.saglik_frame)
+        lbl_saglik_title = QLabel("Saw Health", self.saglik_frame)
         lbl_saglik_title.setGeometry(16, 10, 270, 26)
         lbl_saglik_title.setStyleSheet(_TITLE_STYLE)
 
@@ -314,7 +314,7 @@ class CameraController(QWidget):
         self.durum_frame.setGeometry(660, 740, 300, 120)
         self.durum_frame.setStyleSheet(_FRAME_STYLE)
 
-        lbl_durum_title = QLabel("Testere Durumu", self.durum_frame)
+        lbl_durum_title = QLabel("Saw Status", self.durum_frame)
         lbl_durum_title.setGeometry(16, 10, 270, 26)
         lbl_durum_title.setStyleSheet(_TITLE_STYLE)
 
@@ -324,12 +324,12 @@ class CameraController(QWidget):
         self.lbl_health_status.setAlignment(Qt.AlignCenter)
 
         # ── Recording / FPS info (bottom-right) ──────────────────────
-        self.lbl_frame_count = QLabel("Kare: 0", self)
+        self.lbl_frame_count = QLabel("Frame: 0", self)
         self.lbl_frame_count.setGeometry(1300, 1040, 200, 20)
         self.lbl_frame_count.setStyleSheet(_INFO_STYLE)
         self.lbl_frame_count.setAlignment(Qt.AlignRight)
 
-        self.lbl_recording = QLabel("Kayıt: —", self)
+        self.lbl_recording = QLabel("Recording: —", self)
         self.lbl_recording.setGeometry(1300, 1060, 200, 20)
         self.lbl_recording.setStyleSheet(_INFO_STYLE)
         self.lbl_recording.setAlignment(Qt.AlignRight)
@@ -430,7 +430,7 @@ class CameraController(QWidget):
             self.lbl_kirik_ts.setText(str(last_ts) if last_ts else "—")
 
             if broken and int(broken) > 0:
-                self.lbl_kirik_status.setText("✗ UYARI")
+                self.lbl_kirik_status.setText("✗ WARNING")
                 self._set_alert_style(self.lbl_kirik_status)
             else:
                 self.lbl_kirik_status.setText("✓ OK")
@@ -441,16 +441,16 @@ class CameraController(QWidget):
             self.lbl_catlak_ts.setText(str(last_ts) if last_ts else "—")
 
             if crack and int(crack) > 0:
-                self.lbl_catlak_status.setText("✗ UYARI")
+                self.lbl_catlak_status.setText("✗ WARNING")
                 self._set_alert_style(self.lbl_catlak_status)
             else:
                 self.lbl_catlak_status.setText("✓ OK")
                 self._set_ok_style(self.lbl_catlak_status)
 
             # Recording info
-            self.lbl_frame_count.setText(f"Kare: {frame_count}")
+            self.lbl_frame_count.setText(f"Frame: {frame_count}")
             self.lbl_recording.setText(
-                "Kayıt: Aktif" if is_recording else "Kayıt: —"
+                "Recording: Active" if is_recording else "Recording: —"
             )
 
         except Exception:
