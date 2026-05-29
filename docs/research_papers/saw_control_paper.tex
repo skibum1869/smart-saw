@@ -1,0 +1,137 @@
+   \documentclass[twocolumn,letterpaper]{article}
+
+   % --- Essential Packages ---
+   \usepackage[utf8]{inputenc}
+   \usepackage[T1]{fontenc}
+   \usepackage{amsmath, amssymb, amsfonts}
+   \usepackage{geometry}
+   \usepackage{graphicx}
+   \usepackage{algorithm}
+   \usepackage{algpseudocode}
+   \usepackage{booktabs}
+   \usepackage{xcolor}
+   \usepackage{abstract}
+
+   % --- Page Layout ---
+   \geometry{left=15mm, right=15mm, top=20mm, bottom=20mm}
+
+   % --- Title and Author Info ---
+   \title{\textbf{Adaptive Stochastic Motion-Control and High-Frequency\\Safety Guardrails in Industrial Cutting Processes via Protocol-Agnostic Telemetry
+ Ingestion}}
+   \author{Automated Intelligence Research Division \\ \textit{Technical Specification Report}}
+   \date{\today}
+
+   \begin{document}
+
+   \maketitle
+
+   \begin{abstract}
+   This paper presents a hierarchical control framework designed for high-speed industrial band saw operations, emphasizing machine adaptability and
+ structural integrity. We propose a dual-layered intelligence architecture: a Stochastic Motion Control (SMC) subsystem that utilizes an ensemble of
+ decision trees for real-time velocity optimization, and a High-Frequency Safety Guardrail providing deterministic response to mechanical impedance
+ spikes. By utilizing a protocol-agnostic telemetry ingestion model, the system maintains high-fidelity operational awareness regardless of the underlying
+ industrial communication standard. This document formalizes the mathematical landscapes governing the intelligence and provides the foundation for
+ experimental validation.
+   \end{abstract}
+
+   % --- SECTION 1: INTRODUCTION ---
+   \section{Introduction}
+   In modern precision manufacturing, tool performance is highly sensitive to material heterogeneity. Traditional control-loop architectures rely on
+ deterministic setpoints that fail to account for dynamic tool loading or stochastic variations in cutting resistance. This leads to suboptimal throughput
+ and increased mechanical stress.
+
+   To address these challenges, we introduce an intelligent motion framework. Unlike static controllers, our approach treats industrial movement as a
+ dynamic optimization problem. By combining predictive ensemble learning with high-frequency reactive safety protocols, the machine can adapt its kinetic
+ profile to real-time environmental variations while ensuring absolute mechanical protection through deterministic overrides.
+
+   % --- SECTION 2: SYSTEM ARCHITECTURE ---
+   \section{System Architecture}
+   The architecture is organized into a tiered hierarchy designed to decouple intelligence from high-priority safety tasks.
+
+\subsection{The Control Cycle}
+The system operates on a strictly timed execution cycle ($\Delta t \approx 100$ms) for the primary control loop. However, the Safety Guardrail utilizes a high-priority hardware interrupt to ensure sub-millisecond response times, preempting all predictive optimization tasks in the event of a detected mechanical impulse. Each iteration consists of three phases:
+   \begin{enumerate}
+       \item \textbf{Observation:} Sensor telemetry is ingested and normalized via the industrial fieldbus interface.
+       \item \textbf{Prediction:} The stochastic ensemble calculates optimal velocity offsets.
+       \item \textbf{Execution/Intervention:} Commands are dispatched to actuators or high-priority safety overrides are triggered based on current load
+ state.
+   \end{enumerate}
+
+   \subsection{Execution Priority Hierarchy}
+   The system implements a "Safety-First" preemptive model. The Safety Guardrail operates at a higher priority level than the Stochastic Controller. In
+ the event of a detected mechanical impulse, the safety layer preempts all predictive optimization tasks to ensure immediate response, minimizing tool
+ damage and ensuring deterministic stability.
+
+   % --- SECTION 3: DATA ACQUISITION & SENSOR MODEL ---
+   \section{Hardware-to-Software Data Mapping}
+   The fidelity of the control loop is dependent on the accuracy of the sensor state representation. The system ingests physical quantities through a
+ specialized industrial interface.
+
+   \subsection{Sensor State Vector}
+   The machine's operational state is represented by a high-dimensional vector $\mathbf{S}$, comprising thermodynamic, mechanical, and kinematic
+ observations. These include:
+   \begin{itemize}
+       \item \textbf{Kinematic Variables:} Band cutting velocity ($v_{\rightarrow}$), vertical descent speed ($v_{\downarrow}$), and lateral band
+ deviation ($\delta_{band}$).
+       \item \textbf{Mechanical Loading:} Motor current/amperage ($i$) and torque percentage ($\tau_{\%}$).
+       \item \textbf{Environmental Context:} Ambient temperature ($T_{amb}$) and humidity ($\mathcal{H}_{rel}$).
+   \end{itemize}
+
+   \subsection{Protocol-Agnostic Telemetry Ingestion}
+   To ensure cross-platform compatibility (e.g., Modbus TCP/IP, EtherNet/IP, Profinet), we utilize a high-level abstraction layer for data acquisition via
+ an industrial fieldbus interface $\beta$. We implement a mapping function $\mathcal{M}$ that converts raw hardware-addressed identifiers $A_k$ into
+ standardized engineering units $U_{eng}$:
+   \begin{equation}
+       u_i = \mathcal{M}(A_k) = \mathcal{F}(\text{raw}_k, \text{scale})
+   \end{equation}
+
+To mitigate high-frequency signal jitter inherent in industrial environments, all features $\xi$ undergo temporal smoothing via a sliding-window
+  average. Note that increasing the window size $N$ improves signal fidelity but introduces significant phase lag (latency) into the control loop:
+\begin{equation}
+    \bar{\xi}_t = \frac{1}{N} \sum_{j=0}^{N-j} \xi_{t-j}
+\end{equation}
+
+   % --- SECTION 4: STOCHASTIC MOTION CONTROL ---
+   \section{Stochastic Motion Control (SMC)}
+   The SMC subsystem performs real-time velocity optimization based on the processed feature vector $X_t$.
+
+   \subsection{Predictive Ensemble Optimization}
+   We utilize a Bagging ensemble of $K$ decision trees. The system calculates a scaling coefficient $C_{final}$:
+   \begin{equation}
+       C_{final} = \text{clamp}\left(\frac{1}{K} \sum_{k=1}^{K} T_k(X_t), -1, 1\right) \cdot \lambda
+   \end{equation}
+
+   \subsection {Velocity Adaptation Law}
+   The coefficient is applied to the vertical ($v_{\downarrow}$) and horizontal ($v_{\rightarrow}$) velocity components. To prevent actuator oscillation,
+ a threshold $\epsilon$ is utilized:
+   \begin{equation}
+       \text{IF } |\sum_{i=1}^{n} \Delta v_i| > \epsilon \implies \text{Update Actuators}
+   \end{equation}
+
+   % --- SECTION 5: SAFETY GUARDRAIL ---
+   \section{High-Frequency Safety Guardrail}
+   The safety layer provides a deterministic response to mechanical impedance.
+
+   \subsection{Impulse Detection Strategy}
+   Using a history buffer $(H, \tau)$, the system calculates the interpolated baseline $\tau_{hist}$ at target depth $H_{target}$:
+   \begin{equation}
+       \tau(h) = \tau_1 + (h - h_1)\frac{\tau_2 - \tau_1}{h_2 - h_1}
+   \end{equation}
+
+\subsection {The Reactive Intervention Law}
+A collision event is triggered if the impulse $\Phi$ exceeds the relative threshold $\Phi_{\text{threshold}}$ and a minimum absolute change $\epsilon_{min}$:
+\begin{equation}
+    \text{IF } \left(\frac{\tau_{current} - \tau_{hist}}{\tau_{hist}} > \Phi_{\text{threshold}}\right) \land (\tau_{current} - \tau_{hist} > \epsilon_{\text{min}}) \implies \text{Engage BRAKE\_STATE}
+\end{equation}
+
+   % --- SECTION 6: EXPERIMENTAL METHODOLOGY ---
+   \section{Experimental Methodology}
+   Testing will be conducted using a high-speed industrial band saw equipped with integrated torque sensors and encoders. We shall evaluate predictive
+ accuracy across various density gradients (Softwood, Hardwood, and Metallic) to validate the adaptive intelligence of the SMC layer.
+
+   % --- SECTION 7: CONCLUSION ---
+   \section{Conclusion}
+   This framework provides a robust mathematical foundation for intelligent motion control. By integrating probabilistic optimization with high-frequency
+ safety oversight, we ensure both operational efficiency and mechanical integrity.
+
+   \end{document}
